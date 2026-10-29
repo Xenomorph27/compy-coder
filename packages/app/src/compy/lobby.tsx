@@ -16,7 +16,9 @@ type ProjectChoice = { server: string; directory: string; name: string }
 
 const STEP_LABELS = {
   propose: "compy.workspace.step.propose",
+  discuss: "compy.workspace.step.discuss",
   critique: "compy.workspace.step.critique",
+  revamp: "compy.workspace.step.revamp",
   converge: "compy.workspace.step.converge",
 } as const
 

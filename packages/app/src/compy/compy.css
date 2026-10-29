@@ -310,7 +310,7 @@
 [data-slot="compy-ribbon"] {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--compy-steps, 5), 1fr);
   padding-top: 4px;
 }
 
@@ -318,7 +318,8 @@
   content: "";
   position: absolute;
   top: 9px;
-  inset-inline: 16.6%;
+  /* From the first dot to the last: half a column in from each edge. */
+  inset-inline: calc(50% / var(--compy-steps, 5));
   height: 1px;
   background: linear-gradient(90deg, var(--compy-a), var(--compy-c) 50%, var(--compy-b));
   opacity: 0.45;

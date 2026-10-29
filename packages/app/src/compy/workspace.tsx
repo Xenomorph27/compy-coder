@@ -11,13 +11,17 @@ import { COMPY_SIDES, COMPY_STEPS, useCompy, type CompySide } from "./state"
 
 const STEP_LABELS = {
   propose: "compy.workspace.step.propose",
+  discuss: "compy.workspace.step.discuss",
   critique: "compy.workspace.step.critique",
+  revamp: "compy.workspace.step.revamp",
   converge: "compy.workspace.step.converge",
 } as const
 
 const ACTION_LABELS = {
   propose: "compy.workspace.action.propose",
+  discuss: "compy.workspace.action.discuss",
   critique: "compy.workspace.action.critique",
+  revamp: "compy.workspace.action.revamp",
   converge: "compy.workspace.action.converge",
 } as const
 
@@ -90,7 +94,7 @@ export function CompyWorkspace(props: {
         </Button>
       </header>
 
-      <ol data-slot="compy-ribbon">
+      <ol data-slot="compy-ribbon" style={{ "--compy-steps": COMPY_STEPS.length }}>
         <For each={COMPY_STEPS}>
           {(step, index) => (
             <li
