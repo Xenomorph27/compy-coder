@@ -134,16 +134,17 @@ export function CompyArena(props: { directory: string; project?: ArenaProject })
   const collab = () => compy.arena()?.kind === "collab"
 
   return (
-    <div data-slot="compy-arena" data-kind={collab() ? "collab" : "compete"} class="grid min-h-0 flex-1 gap-2">
-      <AgentPanel side="left" arena={arena} />
-      <Show
-        when={collab()}
-        fallback={<CompyWorkspace arena={arena} directory={props.directory} project={props.project} />}
-      >
-        <CollabWorkspace arena={arena} directory={props.directory} project={props.project} />
-      </Show>
-      {/* The validator changes nothing itself, so its navigator follows the builder's changes under review. */}
-      <AgentPanel side="right" arena={arena} changes={collab() ? "left" : "right"} />
-    </div>
+    <Show
+      when={collab()}
+      fallback={
+        <div data-slot="compy-arena" class="grid min-h-0 flex-1 gap-2">
+          <AgentPanel side="left" arena={arena} />
+          <CompyWorkspace arena={arena} directory={props.directory} project={props.project} />
+          <AgentPanel side="right" arena={arena} />
+        </div>
+      }
+    >
+      <CollabWorkspace arena={arena} directory={props.directory} project={props.project} />
+    </Show>
   )
 }

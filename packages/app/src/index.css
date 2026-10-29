@@ -43,11 +43,12 @@
   font-display: swap;
 }
 
-/* The italic accent face for display lines (Instrument Serif, SIL Open Font License: public/assets/InstrumentSerif-LICENSE.txt). */
+/* The italic accent face for titles and taglines (Instrument Sans, SIL Open Font License: public/assets/InstrumentSans-LICENSE.txt). */
 @font-face {
-  font-family: "Instrument Serif";
-  src: url("/assets/InstrumentSerif-Italic.ttf") format("truetype");
-  font-weight: 400;
+  font-family: "Instrument Sans";
+  src: url("/assets/InstrumentSans-Italic.ttf") format("truetype");
+  font-weight: 400 700;
+  font-stretch: 75% 100%;
   font-style: italic;
   font-display: swap;
 }
