@@ -46,8 +46,10 @@
 }
 
 [data-slot="compy-hero-tagline"] {
-  max-width: 520px;
-  font-size: 15px;
+  max-width: 560px;
+  font-family: var(--font-family-accent);
+  font-style: italic;
+  font-size: 22px;
   line-height: var(--line-height-base);
   color: var(--v2-text-text-muted);
 }

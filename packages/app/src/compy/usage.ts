@@ -78,3 +78,15 @@ export function latestReply(messages: readonly SessionMessageInfo[]) {
     .join("\n\n")
     .trim()
 }
+
+/** The text each prompt got back, in order: one entry per user message, empty while its reply has not started. */
+export function promptReplies(messages: readonly SessionMessageInfo[]) {
+  return messages.reduce<string[]>((replies, message) => {
+    if (message.type === "user") return [...replies, ""]
+
+    if (message.type !== "assistant" || replies.length === 0) return replies
+    const text = message.content.flatMap((part) => (part.type === "text" ? [part.text] : [])).join("\n\n")
+
+    return text ? [...replies.slice(0, -1), [replies.at(-1), text].filter(Boolean).join("\n\n").trim()] : replies
+  }, [])
+}

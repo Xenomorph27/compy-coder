@@ -12,8 +12,9 @@ import { useData, useServer } from "@/runtime/server/current"
 import { showToast } from "@/shell/notifications/toast"
 import { sessionHref } from "@/shell/routes/session"
 import type { ArenaController } from "./arena"
+import { ChangesNavigator } from "./changes"
 import { ContextMeter } from "./context-meter"
-import type { CompySide } from "./state"
+import { agentLabelKey, useCompy, type CompySide } from "./state"
 import { contextUsage, totalTokens } from "./usage"
 
 // The most telling string argument of a tool call, shown next to its name.
@@ -33,13 +34,16 @@ function toolSummary(tool: SessionMessageAssistantTool) {
   return ""
 }
 
-export function AgentPanel(props: { side: CompySide; arena: ArenaController }) {
+/** One agent's column. `changes` picks whose file changes the navigator shows, by default this agent's own. */
+export function AgentPanel(props: { side: CompySide; arena: ArenaController; changes?: CompySide }) {
+  const compy = useCompy()
   const language = useLanguage()
   const data = useData()
   const server = useServer()
   const navigate = useNavigate()
 
-  const label = () => language.t(props.side === "left" ? "compy.agent.left" : "compy.agent.right")
+  const label = () => language.t(agentLabelKey(compy.arena()?.kind ?? "compete", props.side))
+  const changesSide = () => props.changes ?? props.side
   const sessionID = () => props.arena.sessionID(props.side)
   const model = () => props.arena.model(props.side)
   const messages = () => props.arena.messages(props.side)
@@ -121,6 +125,13 @@ export function AgentPanel(props: { side: CompySide; arena: ArenaController }) {
       </header>
 
       <Transcript messages={messages()} running={running()} sessionID={sessionID()} />
+
+      <ChangesNavigator
+        sessionID={props.arena.sessionID(changesSide())}
+        messages={props.arena.messages(changesSide())}
+        running={props.arena.running(changesSide())}
+        title={language.t(changesSide() === props.side ? "compy.changes.title" : "compy.changes.review")}
+      />
 
       <section data-slot="compy-subagents" aria-label={language.t("compy.subagents.title")}>
         <div class="flex items-center gap-2">

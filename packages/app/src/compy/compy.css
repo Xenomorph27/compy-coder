@@ -52,11 +52,14 @@
   pointer-events: none;
 }
 
+/* Section titles use the italic accent face; it runs small, so it is set a step larger than the sans. */
 [data-slot="compy-title"] {
-  font-size: 16px;
-  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-accent);
+  font-style: italic;
+  font-size: 21px;
+  font-weight: 400;
   line-height: var(--line-height-base);
-  letter-spacing: -0.015em;
+  letter-spacing: 0;
   color: var(--v2-text-text-base);
 }
 
@@ -193,6 +196,7 @@
 }
 
 [data-slot="compy-subagents"],
+[data-slot="compy-changes"],
 [data-slot="compy-context"] {
   display: flex;
   flex-direction: column;
@@ -519,4 +523,130 @@
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-compact);
   color: var(--v2-text-text-base);
+}
+
+/* Changed-files navigator: folders fold, every row carries its +/- line counts. */
+[data-slot="compy-change-row"] {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding-inline: calc(4px + var(--depth, 0) * 14px) 6px;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: var(--line-height-compact);
+  color: var(--v2-text-text-base);
+}
+
+button[data-slot="compy-change-row"]:hover {
+  background: color-mix(in oklab, var(--v2-text-text-base) 6%, transparent);
+}
+
+[data-slot="compy-change-row"] svg {
+  flex: none;
+  color: var(--v2-text-text-muted);
+}
+
+[data-slot="compy-change-row"][data-status="deleted"] > span:nth-of-type(2) {
+  text-decoration: line-through;
+  color: var(--v2-text-text-muted);
+}
+
+[data-slot="compy-change-chevron"] {
+  width: 14px;
+  flex: none;
+  transition: transform 120ms ease-out;
+}
+
+[data-slot="compy-change-chevron"][data-closed] {
+  transform: rotate(-90deg);
+}
+
+[data-slot="compy-change-status"] {
+  padding: 0 5px;
+  border-radius: 4px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--v2-text-text-muted);
+  background: color-mix(in oklab, var(--v2-text-text-base) 8%, transparent);
+}
+
+/* Collab: what the pair is doing now, the checkpoints so far, and the validator's latest verdict. */
+[data-slot="collab-status"] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  line-height: var(--line-height-compact);
+  color: var(--v2-text-text-muted);
+}
+
+[data-slot="collab-status"][data-state="done"] {
+  color: var(--v2-state-fg-success);
+}
+
+[data-slot="collab-status"][data-state="failed"] {
+  color: var(--v2-state-fg-danger);
+}
+
+[data-slot="collab-checkpoints"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+[data-slot="collab-checkpoints"] li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--v2-border-border-base);
+  font-size: 12px;
+  line-height: var(--line-height-compact);
+  color: var(--v2-text-text-base);
+}
+
+[data-slot="collab-checkpoint-state"] {
+  color: var(--v2-text-text-muted);
+}
+
+[data-slot="collab-checkpoint-dot"] {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--compy-c);
+  animation: compy-pulse 1.6s ease-in-out infinite;
+}
+
+[data-slot="collab-checkpoints"] li[data-state="approve"] [data-slot="collab-checkpoint-dot"] {
+  background: var(--v2-state-fg-success);
+  animation: none;
+}
+
+[data-slot="collab-checkpoints"] li[data-state="changes"] [data-slot="collab-checkpoint-dot"] {
+  background: var(--v2-state-fg-danger);
+  animation: none;
+}
+
+[data-slot="collab-verdict"] {
+  margin-inline-start: auto;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-compact);
+}
+
+[data-slot="collab-verdict"][data-state="approve"] {
+  color: var(--v2-state-fg-success);
+  background: color-mix(in oklab, var(--v2-state-fg-success) 14%, transparent);
+}
+
+[data-slot="collab-verdict"][data-state="changes"] {
+  color: var(--v2-state-fg-danger);
+  background: color-mix(in oklab, var(--v2-state-fg-danger) 14%, transparent);
 }

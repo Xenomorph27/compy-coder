@@ -1,5 +1,7 @@
 import { Component, Show } from "solid-js"
 import { Select } from "@opencode/ui/select"
+import { Switch } from "@opencode/ui/switch"
+import { usePet } from "@/compy/pet-state"
 import { TextInput } from "@opencode/ui/text-input"
 import { useLanguage } from "@/runtime/i18n/language"
 import { ExternalLink } from "@/runtime/platform/external-link"
@@ -72,6 +74,7 @@ const FontSetting: Component<{
 export const SettingsAppearance: Component = () => {
   const language = useLanguage()
   const appearance = createAppearanceSettingsController()
+  const pet = usePet()
 
   return (
     <>
@@ -167,6 +170,15 @@ export const SettingsAppearance: Component = () => {
                 label={(option) => language.t(option.label)}
                 onSelect={(option) => option && appearance.reduceMotion.select(option.value)}
               />
+            </SettingsRow>
+
+            <SettingsRow
+              title={language.t("settings.appearance.row.pet.title")}
+              description={language.t("settings.appearance.row.pet.description")}
+            >
+              <Switch checked={pet.visible()} onChange={pet.setVisible} hideLabel>
+                {language.t("settings.appearance.row.pet.title")}
+              </Switch>
             </SettingsRow>
           </SettingsList>
         </div>

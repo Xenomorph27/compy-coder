@@ -51,26 +51,42 @@ export function CompyLobby() {
     projects().find((item) => item.server === arena.server && item.directory === arena.directory)?.name ??
     getFilename(arena.directory)
 
-  const progress = (arena: CompyArena) =>
-    arena.step >= COMPY_STEPS.length
+  const collab = () => compy.kind() === "collab"
+  // Collab and Compy share the lobby; only the copy differs.
+  const copy = (name: "new" | "newDescription" | "start" | "previous" | "empty" | "untitled") =>
+    language.t(collab() ? `collab.lobby.${name}` : `compy.lobby.${name}`)
+
+  const progress = (arena: CompyArena) => {
+    if (arena.kind === "collab")
+      return arena.phase === "done"
+        ? language.t("collab.lobby.done")
+        : arena.phase === "idle"
+          ? language.t("collab.lobby.notStarted")
+          : language.t("collab.lobby.checkpoint", { checkpoint: Math.max(1, arena.step) })
+
+    return arena.step >= COMPY_STEPS.length
       ? language.t("compy.lobby.finished")
       : language.t("compy.lobby.step", {
           step: arena.step + 1,
           total: COMPY_STEPS.length,
           name: language.t(STEP_LABELS[COMPY_STEPS[arena.step]]),
         })
+  }
+
+  const finished = (arena: CompyArena) =>
+    arena.kind === "collab" ? arena.phase === "done" : arena.step >= COMPY_STEPS.length
 
   return (
     <div data-slot="compy-lobby" data-scrollable class="min-h-0 flex-1 overflow-y-auto">
       <div class="mx-auto flex w-full max-w-[880px] flex-col gap-10 px-6 pb-16 pt-[10vh]">
-        <CompyHero tagline="arena" />
+        <CompyHero tagline={collab() ? "collab" : "arena"} />
 
-        <section data-slot="compy-panel" data-side="center" aria-label={language.t("compy.lobby.new")}>
+        <section data-slot="compy-panel" data-side="center" aria-label={copy("new")}>
           <div class="flex flex-wrap items-center gap-3">
             <div class="flex min-w-[200px] flex-1 flex-col gap-1">
-              <h2 data-slot="compy-title">{language.t("compy.lobby.new")}</h2>
+              <h2 data-slot="compy-title">{copy("new")}</h2>
               <p class="text-[13px] leading-[var(--line-height-compact)] text-v2-text-text-muted">
-                {language.t("compy.lobby.newDescription")}
+                {copy("newDescription")}
               </p>
             </div>
             <div class="w-[240px] min-w-0">
@@ -94,7 +110,7 @@ export function CompyLobby() {
                 if (target) compy.start(target.server, target.directory)
               }}
             >
-              {language.t("compy.lobby.start")}
+              {copy("start")}
             </Button>
           </div>
           <Show when={projects().length === 0}>
@@ -104,11 +120,11 @@ export function CompyLobby() {
           </Show>
         </section>
 
-        <section class="flex flex-col gap-3" aria-label={language.t("compy.lobby.previous")}>
-          <h2 data-slot="compy-eyebrow">{language.t("compy.lobby.previous")}</h2>
+        <section class="flex flex-col gap-3" aria-label={copy("previous")}>
+          <h2 data-slot="compy-eyebrow">{copy("previous")}</h2>
           <Show
             when={compy.arenas().length > 0}
-            fallback={<p data-slot="compy-empty">{language.t("compy.lobby.empty")}</p>}
+            fallback={<p data-slot="compy-empty">{copy("empty")}</p>}
           >
             <ul class="flex flex-col gap-1">
               <For each={compy.arenas()}>
@@ -121,7 +137,7 @@ export function CompyLobby() {
                     >
                       <span class="min-w-0 flex-1">
                         <span class="block truncate text-[14px] font-medium leading-[var(--line-height-base)] text-v2-text-text-base">
-                          {arena.topic.trim() || language.t("compy.lobby.untitled")}
+                          {arena.topic.trim() || copy("untitled")}
                         </span>
                         <span class="flex min-w-0 items-center gap-2 text-[12px] leading-[var(--line-height-compact)] text-v2-text-text-muted">
                           <Icon name="folder" size="small" />
@@ -132,7 +148,7 @@ export function CompyLobby() {
                           </span>
                         </span>
                       </span>
-                      <span data-slot="compy-arena-progress" data-finished={arena.step >= COMPY_STEPS.length || undefined}>
+                      <span data-slot="compy-arena-progress" data-finished={finished(arena) || undefined}>
                         {progress(arena)}
                       </span>
                       <span class="w-[72px] shrink-0 text-end font-mono text-[12px] tabular-nums text-v2-text-text-muted">

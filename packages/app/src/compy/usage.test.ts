@@ -1,6 +1,6 @@
 import type { SessionMessageInfo } from "@opencode/client/promise"
 import { describe, expect, test } from "bun:test"
-import { contextUsage, latestFailure, latestReply } from "./usage"
+import { contextUsage, latestFailure, latestReply, promptReplies } from "./usage"
 
 const model = { id: "m", providerID: "p" }
 
@@ -88,5 +88,21 @@ describe("latest turn", () => {
   ])("$name", ({ messages, reply, failure }) => {
     expect(latestReply(messages)).toBe(reply)
     expect(latestFailure(messages)).toBe(failure)
+  })
+})
+
+describe("promptReplies", () => {
+  test("pairs each prompt with the text of every step that answered it", () => {
+    const messages = [
+      user("u1"),
+      step("a1", 1, 0, 1, "reading files"),
+      step("a2", 1, 0, 1, "checkpoint 1 built"),
+      idle("i1", "succeeded"),
+      user("u2"),
+      step("a3", 1, 0, 1),
+      user("u3"),
+    ]
+
+    expect(promptReplies(messages)).toEqual(["reading files\n\ncheckpoint 1 built", "", ""])
   })
 })

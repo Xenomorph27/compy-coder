@@ -10,6 +10,8 @@ import { SettingsSurfaceProvider } from "@/settings/surface"
 import Shell from "@/shell/shell"
 import { requireServerKey } from "./session"
 import { PluginAttachment } from "@/runtime/plugin/root"
+import { CompyPet } from "@/compy/pet"
+import { PetProvider } from "@/compy/pet-state"
 import { CompyProvider } from "@/compy/state"
 
 export const File = lazy(() => import("@opencode/session-ui/file").then((module) => ({ default: module.File })))
@@ -75,6 +77,7 @@ export function AppRoutes() {
       />
       <Route path="/new-session" component={DraftRoute} />
       <Route path="/compy" component={CompyRoute} />
+      <Route path="/collab" component={CompyRoute} />
       {ComponentsLab && <Route path="/components" component={ComponentsLab} />}
     </Route>
   )
@@ -114,7 +117,10 @@ function AppLayout(props: ParentProps) {
         <SettingsSurfaceProvider>
           <PluginAttachment>
             <CompyProvider>
-              <Shell>{props.children}</Shell>
+              <PetProvider>
+                <Shell>{props.children}</Shell>
+                <CompyPet />
+              </PetProvider>
             </CompyProvider>
           </PluginAttachment>
         </SettingsSurfaceProvider>

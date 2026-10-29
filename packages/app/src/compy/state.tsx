@@ -15,6 +15,24 @@ export const COMPY_STEPS = ["propose", "discuss", "critique", "revamp", "converg
 
 export type CompyStep = (typeof COMPY_STEPS)[number]
 
+/** Compete pits two agents against each other on a plan; collab has one build while the other validates. */
+export type ArenaKind = "compete" | "collab"
+
+/** Where a collab run is: the builder working toward a checkpoint, the validator reviewing it, or finished. */
+export type CollabPhase = "idle" | "build" | "review" | "done"
+
+const ROUTES = { compete: "/compy", collab: "/collab" } as const satisfies Record<ArenaKind, string>
+
+/** The i18n key naming an agent: the two rivals in compete, the builder and validator in collab. */
+export const agentLabelKey = (kind: ArenaKind, side: CompySide) =>
+  kind === "collab"
+    ? side === "left"
+      ? ("collab.agent.builder" as const)
+      : ("collab.agent.validator" as const)
+    : side === "left"
+      ? ("compy.agent.left" as const)
+      : ("compy.agent.right" as const)
+
 const Agent = Persistence.struct({
   providerID: Persistence.optional(Schema.String),
   modelID: Persistence.optional(Schema.String),
@@ -31,6 +49,11 @@ const ArenaRecord = Persistence.struct({
   left: Persistence.fallback(Agent, () => ({})),
   right: Persistence.fallback(Agent, () => ({})),
   step: Persistence.fallback(Schema.Number, () => 0),
+  kind: Persistence.fallback(Schema.Literals(["compete", "collab"]), () => "compete" as const),
+  /** Collab only. `step` counts the checkpoints the builder has reached. */
+  phase: Persistence.fallback(Schema.Literals(["idle", "build", "review", "done"]), () => "idle" as const),
+  /** Collab only: hold at the next checkpoint instead of handing over automatically. */
+  paused: Persistence.fallback(Schema.Boolean, () => false),
   created: Schema.Number,
   updated: Schema.Number,
 })
@@ -55,10 +78,15 @@ export const { use: useCompy, provider: CompyProvider } = createSimpleContext({
 
     const [store, setStore, , ready] = persisted(Persist.global("compy.arenas"), Store, { arenas: [] })
 
-    const active = () => location.pathname === "/compy"
-    const index = () => store.arenas.findIndex((arena) => arena.id === store.current)
+    const kind = (): ArenaKind | undefined =>
+      location.pathname === ROUTES.compete ? "compete" : location.pathname === ROUTES.collab ? "collab" : undefined
+    const active = () => kind() !== undefined
+    // An arena only opens under its own mode's route; the other mode shows its lobby.
+    const index = () => store.arenas.findIndex((arena) => arena.id === store.current && arena.kind === kind())
     const arena = createMemo(() => store.arenas[index()])
-    const arenas = createMemo(() => store.arenas.toSorted((a, b) => b.updated - a.updated))
+    const arenas = createMemo(() =>
+      store.arenas.filter((item) => item.kind === kind()).toSorted((a, b) => b.updated - a.updated),
+    )
 
     // Only the open arena's agents stay loaded; a resumed arena loads its transcripts again.
     createEffect(() => {
@@ -86,18 +114,20 @@ export const { use: useCompy, provider: CompyProvider } = createSimpleContext({
     return {
       ready,
       active,
+      kind,
       arena,
       arenas,
-      enter() {
-        if (active()) return
-        setStore({ returnTo: `${location.pathname}${location.search}`, current: undefined })
-        navigate("/compy")
+      enter(next: ArenaKind) {
+        if (kind() === next) return
+        setStore(active() ? { current: undefined } : { returnTo: `${location.pathname}${location.search}`, current: undefined })
+        navigate(ROUTES[next])
       },
       leave() {
         if (!active()) return
         navigate(store.returnTo ?? "/")
       },
       start(server: string, directory: string) {
+        const mode = kind() ?? "compete"
         const now = Date.now()
         const id = `arena_${now.toString(36)}${Math.random().toString(36).slice(2, 8)}`
 
@@ -109,6 +139,9 @@ export const { use: useCompy, provider: CompyProvider } = createSimpleContext({
           left: lastModels("left"),
           right: lastModels("right"),
           step: 0,
+          kind: mode,
+          phase: "idle",
+          paused: false,
           created: now,
           updated: now,
         })
@@ -138,6 +171,12 @@ export const { use: useCompy, provider: CompyProvider } = createSimpleContext({
       },
       setStep(step: number) {
         update(() => ({ step }))
+      },
+      setPhase(phase: CollabPhase, step?: number) {
+        update((open) => ({ phase, step: step ?? open.step }))
+      },
+      setPaused(paused: boolean) {
+        update(() => ({ paused }))
       },
     }
   },
