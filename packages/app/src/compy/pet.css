@@ -89,7 +89,8 @@
   box-shadow: var(--v2-elevation-floating);
   font-family: var(--font-family-accent);
   font-style: italic;
-  font-size: 17px;
+  font-weight: 500;
+  font-size: 14px;
   line-height: 1.2;
   color: var(--v2-text-text-base);
   animation: compy-pet-pop 220ms ease-out;

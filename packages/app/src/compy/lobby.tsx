@@ -159,15 +159,17 @@ export function CompyLobby() {
                         <Icon name="outline-arrow-right" size="small" />
                       </span>
                     </button>
-                    <Tooltip placement="top" value={language.t("compy.lobby.delete")}>
-                      <IconButton
-                        variant="ghost"
-                        size="small"
-                        icon={<Icon name="outline-trash" size="small" />}
-                        aria-label={language.t("compy.lobby.delete")}
-                        onClick={() => compy.remove(arena.id)}
-                      />
-                    </Tooltip>
+                    <span data-slot="compy-arena-delete" class="flex">
+                      <Tooltip placement="top" value={language.t("compy.lobby.delete")}>
+                        <IconButton
+                          variant="ghost"
+                          size="small"
+                          icon={<Icon name="outline-trash" size="small" />}
+                          aria-label={language.t("compy.lobby.delete")}
+                          onClick={() => compy.remove(arena.id)}
+                        />
+                      </Tooltip>
+                    </span>
                   </li>
                 )}
               </For>

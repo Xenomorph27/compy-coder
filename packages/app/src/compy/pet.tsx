@@ -160,132 +160,134 @@ function CatModel(props: { poked: boolean }) {
   return (
     <svg viewBox="0 0 140 150" width={SIZE} height={SIZE} aria-hidden="true" data-poked={props.poked || undefined}>
       <defs>
-        <radialGradient id="pet-fur" cx="38%" cy="30%" r="75%">
+        <radialGradient id="pet-fur" cx="40%" cy="32%" r="72%">
           <stop offset="0" stop-color="#ffffff" />
-          <stop offset="0.55" stop-color="#f1eff3" />
-          <stop offset="0.85" stop-color="#cfcbd6" />
-          <stop offset="1" stop-color="#a9a4b3" />
+          <stop offset="0.6" stop-color="#f3f1f4" />
+          <stop offset="0.86" stop-color="#d4d0d9" />
+          <stop offset="1" stop-color="#aaa5b2" />
         </radialGradient>
-        <radialGradient id="pet-patch" cx="35%" cy="25%" r="80%">
-          <stop offset="0" stop-color="#6d6873" />
-          <stop offset="0.6" stop-color="#3f3b45" />
-          <stop offset="1" stop-color="#25222a" />
+        <radialGradient id="pet-patch" cx="38%" cy="22%" r="85%">
+          <stop offset="0" stop-color="#5f5a63" />
+          <stop offset="0.55" stop-color="#3a363d" />
+          <stop offset="1" stop-color="#1f1c22" />
         </radialGradient>
-        <radialGradient id="pet-ear-inner" cx="50%" cy="70%" r="70%">
-          <stop offset="0" stop-color="#f7b7c4" />
-          <stop offset="1" stop-color="#c97d8f" />
+        <radialGradient id="pet-ear-inner" cx="50%" cy="72%" r="72%">
+          <stop offset="0" stop-color="#f6b3c0" />
+          <stop offset="1" stop-color="#c47788" />
         </radialGradient>
-        <radialGradient id="pet-cheek" cx="45%" cy="35%" r="70%">
+        <radialGradient id="pet-ear-inner-dark" cx="50%" cy="72%" r="72%">
+          <stop offset="0" stop-color="#b98d97" />
+          <stop offset="1" stop-color="#6e5a60" />
+        </radialGradient>
+        <radialGradient id="pet-cheek" cx="45%" cy="32%" r="72%">
           <stop offset="0" stop-color="#ffffff" />
-          <stop offset="0.7" stop-color="#f3f1f5" />
-          <stop offset="1" stop-color="#d8d4de" />
+          <stop offset="0.7" stop-color="#f4f2f6" />
+          <stop offset="1" stop-color="#d3cfda" />
         </radialGradient>
-        <radialGradient id="pet-eye" cx="40%" cy="35%" r="65%">
-          <stop offset="0" stop-color="#2a2a30" />
-          <stop offset="0.75" stop-color="#0b0b0e" />
+        <radialGradient id="pet-eye" cx="42%" cy="36%" r="65%">
+          <stop offset="0" stop-color="#2b2a2f" />
+          <stop offset="0.72" stop-color="#0b0b0d" />
           <stop offset="1" stop-color="#000000" />
         </radialGradient>
         <radialGradient id="pet-iris" cx="50%" cy="50%" r="50%">
-          <stop offset="0.82" stop-color="#7d7440" />
-          <stop offset="1" stop-color="#4b4524" />
+          <stop offset="0.8" stop-color="#a6a24f" />
+          <stop offset="1" stop-color="#57532a" />
         </radialGradient>
         <radialGradient id="pet-nose" cx="40%" cy="30%" r="80%">
-          <stop offset="0" stop-color="#ffd0da" />
-          <stop offset="0.6" stop-color="#f19aae" />
-          <stop offset="1" stop-color="#cf6f86" />
+          <stop offset="0" stop-color="#ffd3dc" />
+          <stop offset="0.6" stop-color="#ef9aad" />
+          <stop offset="1" stop-color="#c96b82" />
         </radialGradient>
         <radialGradient id="pet-ground" cx="50%" cy="50%" r="50%">
           <stop offset="0" stop-color="#000" stop-opacity="0.55" />
           <stop offset="1" stop-color="#000" stop-opacity="0" />
         </radialGradient>
         <clipPath id="pet-head-clip">
-          <ellipse cx="70" cy="62" rx="48" ry="41" />
+          <ellipse cx="70" cy="64" rx="54" ry="46" />
         </clipPath>
       </defs>
 
-      <ellipse cx="70" cy="143" rx="44" ry="6" fill="url(#pet-ground)" data-slot="pet-shadow" />
+      <ellipse cx="70" cy="145" rx="42" ry="5" fill="url(#pet-ground)" data-slot="pet-shadow" />
 
       <g data-slot="pet-tail">
-        <path
-          d="M98 128 C122 126 128 104 118 92 C114 87 108 90 112 96 C118 106 112 118 96 120 Z"
-          fill="url(#pet-patch)"
-        />
+        <path d="M100 136 C124 134 130 112 121 99 C117 94 111 97 115 103 C120 112 114 125 98 128 Z" fill="url(#pet-patch)" />
       </g>
 
       <g data-slot="pet-torso">
-        <ellipse cx="70" cy="116" rx="35" ry="27" fill="url(#pet-fur)" />
-        <ellipse cx="56" cy="138" rx="10" ry="6" fill="url(#pet-cheek)" />
-        <ellipse cx="84" cy="138" rx="10" ry="6" fill="url(#pet-cheek)" />
-        <path d="M53 135 v4 M57 135.5 v4 M83 135.5 v4 M87 135 v4" stroke="#bdb8c6" stroke-width="1" stroke-linecap="round" />
+        <ellipse cx="70" cy="124" rx="36" ry="24" fill="url(#pet-fur)" />
+        <ellipse cx="56" cy="141" rx="10" ry="5.5" fill="url(#pet-cheek)" />
+        <ellipse cx="84" cy="141" rx="10" ry="5.5" fill="url(#pet-cheek)" />
+        <path d="M53 138.5 v3.5 M57 139 v3.5 M83 139 v3.5 M87 138.5 v3.5" stroke="#bdb8c6" stroke-width="1" stroke-linecap="round" />
       </g>
 
       <g data-slot="pet-head">
         <g data-slot="pet-ears">
-          <path d="M28 52 C24 30 28 14 36 8 C46 14 56 24 62 32 Z" fill="url(#pet-patch)" />
-          <path d="M34 44 C32 30 35 20 38 16 C44 21 50 27 53 32 Z" fill="url(#pet-ear-inner)" />
-          <path d="M112 52 C116 30 112 14 104 8 C94 14 84 24 78 32 Z" fill="url(#pet-patch)" />
-          <path d="M106 44 C108 30 105 20 102 16 C96 21 90 27 87 32 Z" fill="url(#pet-ear-inner)" />
+          <path d="M22 50 C16 28 20 12 30 4 C42 10 54 20 62 28 Z" fill="url(#pet-patch)" />
+          <path d="M29 42 C27 28 29 18 33 13 C40 18 47 24 51 29 Z" fill="url(#pet-ear-inner)" />
+          <path d="M118 50 C124 28 120 12 110 4 C98 10 86 20 78 28 Z" fill="url(#pet-patch)" />
+          <path d="M111 42 C113 28 111 18 107 13 C100 18 93 24 89 29 Z" fill="url(#pet-ear-inner-dark)" />
         </g>
 
-        <ellipse cx="70" cy="62" rx="48" ry="41" fill="url(#pet-fur)" />
-        {/* The dark cap over the forehead and the right ear, as on the original cat. */}
+        <ellipse cx="70" cy="64" rx="54" ry="46" fill="url(#pet-fur)" />
+        {/* The dark cap over the left ear and forehead and the patch round the right ear, as on the photo's cat. */}
         <g clip-path="url(#pet-head-clip)">
-          <path d="M18 50 C22 26 44 16 62 18 C60 30 52 38 40 42 C32 45 24 48 18 50 Z" fill="url(#pet-patch)" />
-          <path d="M84 18 C100 18 116 28 122 46 C110 44 98 38 90 30 C87 26 85 22 84 18 Z" fill="url(#pet-patch)" />
-          <ellipse cx="52" cy="34" rx="22" ry="10" fill="#fff" opacity="0.12" />
+          <path d="M14 70 C14 42 32 18 62 15 C76 14 80 22 73 31 C66 39 56 41 44 45 C33 49 22 57 14 70 Z" fill="url(#pet-patch)" />
+          <path d="M84 17 C104 15 122 30 127 54 C116 47 105 41 97 35 C90 30 86 24 84 17 Z" fill="url(#pet-patch)" />
+          <ellipse cx="80" cy="25" rx="8" ry="6" fill="#4a464e" opacity="0.35" />
+          <ellipse cx="52" cy="33" rx="20" ry="8" fill="#fff" opacity="0.1" />
         </g>
 
         <g data-slot="pet-face">
-          {/* Soft hollows that make the eyes look wide open. */}
-          <ellipse cx="49" cy="58" rx="18" ry="17.5" fill="#d9d5df" opacity="0.55" />
-          <ellipse cx="91" cy="58" rx="18" ry="17.5" fill="#d9d5df" opacity="0.55" />
+          {/* Lids and hollows round the eyes, so they read as wide open and a little startled. */}
+          <ellipse cx="48" cy="62" rx="19.5" ry="19" fill="#d8d2da" opacity="0.6" />
+          <ellipse cx="92" cy="62" rx="19.5" ry="19" fill="#d8d2da" opacity="0.6" />
 
           <g data-slot="pet-eye">
-            <circle cx="49" cy="58" r="15" fill="url(#pet-iris)" />
+            <circle cx="48" cy="62" r="16.5" fill="url(#pet-iris)" />
             <g data-slot="pet-pupil">
-              <circle cx="49" cy="58" r="13.4" fill="url(#pet-eye)" />
-              <circle cx="44" cy="52.5" r="4.2" fill="#fff" />
-              <circle cx="54.5" cy="63.5" r="1.6" fill="#fff" opacity="0.85" />
+              <circle cx="48" cy="62" r="14.2" fill="url(#pet-eye)" />
+              <circle cx="42.5" cy="55.5" r="4.6" fill="#fff" />
+              <circle cx="54" cy="68.5" r="1.8" fill="#fff" opacity="0.85" />
             </g>
           </g>
           <g data-slot="pet-eye">
-            <circle cx="91" cy="58" r="15" fill="url(#pet-iris)" />
+            <circle cx="92" cy="62" r="16.5" fill="url(#pet-iris)" />
             <g data-slot="pet-pupil">
-              <circle cx="91" cy="58" r="13.4" fill="url(#pet-eye)" />
-              <circle cx="86" cy="52.5" r="4.2" fill="#fff" />
-              <circle cx="96.5" cy="63.5" r="1.6" fill="#fff" opacity="0.85" />
+              <circle cx="92" cy="62" r="14.2" fill="url(#pet-eye)" />
+              <circle cx="86.5" cy="55.5" r="4.6" fill="#fff" />
+              <circle cx="98" cy="68.5" r="1.8" fill="#fff" opacity="0.85" />
             </g>
           </g>
 
-          {/* Puffed cheeks pressing up into a tight, too-polite smile. */}
-          <ellipse cx="57" cy="84" rx="17" ry="11.5" fill="url(#pet-cheek)" />
-          <ellipse cx="83" cy="84" rx="17" ry="11.5" fill="url(#pet-cheek)" />
-          <ellipse cx="70" cy="95" rx="12" ry="3.6" fill="#c9c4d1" opacity="0.75" />
-          <g fill="#b9b3c2">
-            <circle cx="55" cy="79" r="0.9" />
-            <circle cx="59" cy="81.5" r="0.9" />
-            <circle cx="51" cy="81.5" r="0.9" />
-            <circle cx="85" cy="79" r="0.9" />
-            <circle cx="81" cy="81.5" r="0.9" />
-            <circle cx="89" cy="81.5" r="0.9" />
+          {/* Puffed whisker pads pressing up into the long, too-polite smile. */}
+          <ellipse cx="57" cy="91" rx="18" ry="12" fill="url(#pet-cheek)" />
+          <ellipse cx="83" cy="91" rx="18" ry="12" fill="url(#pet-cheek)" />
+          <ellipse cx="70" cy="104" rx="12" ry="4" fill="#cbc6d2" opacity="0.75" />
+          <g fill="#b6b0bf">
+            <circle cx="53" cy="86" r="0.9" />
+            <circle cx="58" cy="88.5" r="0.9" />
+            <circle cx="49" cy="89" r="0.9" />
+            <circle cx="87" cy="86" r="0.9" />
+            <circle cx="82" cy="88.5" r="0.9" />
+            <circle cx="91" cy="89" r="0.9" />
           </g>
-
-          <path d="M64.5 75 C64.5 72.5 75.5 72.5 75.5 75 C75.5 78 72 80 70 80.5 C68 80 64.5 78 64.5 75 Z" fill="url(#pet-nose)" />
-          <ellipse cx="67.5" cy="74.3" rx="2" ry="0.9" fill="#fff" opacity="0.7" />
-          {/* One long pressed-lip line, corners pushed up into the cheeks: polite, and not at all relaxed. */}
-          <path d="M70 80.5 V86.5" stroke="#a77380" stroke-width="1.4" stroke-linecap="round" />
-          <path d="M45 84.5 C56 93.5 84 93.5 95 84.5 C84 90.5 56 90.5 45 84.5 Z" fill="#c48a97" />
           <path
-            d="M45 84.5 C56 92 84 92 95 84.5"
-            fill="none"
-            stroke="#94606d"
-            stroke-width="1.5"
+            d="M44 90 L12 85 M44 93 L11 95 M45 96 L14 104 M96 90 L128 85 M96 93 L129 95 M95 96 L126 104"
+            stroke="#ece9f0"
+            stroke-width="0.8"
             stroke-linecap="round"
+            opacity="0.85"
           />
+
+          <path d="M62.5 82 C62.5 78.5 77.5 78.5 77.5 82 C77.5 85.5 72.5 88 70 88.5 C67.5 88 62.5 85.5 62.5 82 Z" fill="url(#pet-nose)" />
+          <ellipse cx="66.5" cy="80.8" rx="2.3" ry="1" fill="#fff" opacity="0.7" />
+          <path d="M70 88.5 V95.5" stroke="#9b6873" stroke-width="1.3" stroke-linecap="round" />
+          <path d="M43 94 C55 103.5 85 103.5 97 94 C85 99.5 55 99.5 43 94 Z" fill="#c48a97" />
+          <path d="M43 94 C55 101.5 85 101.5 97 94" fill="none" stroke="#8c5763" stroke-width="1.5" stroke-linecap="round" />
         </g>
 
         {/* Rim light along the upper left of the head. */}
-        <path d="M30 40 C38 26 52 21 66 21" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity="0.35" />
+        <path d="M24 44 C32 28 46 20 60 18" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity="0.25" />
       </g>
     </svg>
   )

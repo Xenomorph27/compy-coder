@@ -34,21 +34,15 @@ function toolSummary(tool: SessionMessageAssistantTool) {
   return ""
 }
 
-/** One agent's column. `changes` picks whose file changes the navigator shows, by default this agent's own. */
-export function AgentPanel(props: { side: CompySide; arena: ArenaController; changes?: CompySide }) {
+/** Everything the agent views read about one side: its label, model, transcript, subagents and usage. */
+export function useAgent(arena: ArenaController, side: () => CompySide) {
   const compy = useCompy()
   const language = useLanguage()
   const data = useData()
-  const server = useServer()
-  const navigate = useNavigate()
 
-  const label = () => language.t(agentLabelKey(compy.arena()?.kind ?? "compete", props.side))
-  const changesSide = () => props.changes ?? props.side
-  const sessionID = () => props.arena.sessionID(props.side)
-  const model = () => props.arena.model(props.side)
-  const messages = () => props.arena.messages(props.side)
-  const running = () => props.arena.running(props.side)
-  const usage = createMemo(() => contextUsage(messages(), model()?.limit.context ?? 0))
+  const sessionID = () => arena.sessionID(side())
+  const model = () => arena.model(side())
+  const messages = () => arena.messages(side())
 
   const subagents = createMemo(() => {
     const id = sessionID()
@@ -56,15 +50,117 @@ export function AgentPanel(props: { side: CompySide; arena: ArenaController; cha
     return id ? data.session.list().filter((session) => session.parentID === id) : []
   })
 
-  const totals = createMemo(() => {
-    const id = sessionID()
-    const session = props.arena.session(props.side)
+  return {
+    label: () => language.t(agentLabelKey(compy.arena()?.kind ?? "compete", side())),
+    sessionID,
+    model,
+    messages,
+    running: () => arena.running(side()),
+    subagents,
+    usage: createMemo(() => contextUsage(messages(), model()?.limit.context ?? 0)),
+    totals: createMemo(() => {
+      const id = sessionID()
+      const session = arena.session(side())
 
-    return {
-      tokens: [session, ...subagents()].reduce((sum, item) => sum + (item ? totalTokens(item.tokens) : 0), 0),
-      cost: id ? data.session.cost(id) : 0,
-    }
-  })
+      return {
+        tokens: [session, ...subagents()].reduce((sum, item) => sum + (item ? totalTokens(item.tokens) : 0), 0),
+        cost: id ? data.session.cost(id) : 0,
+      }
+    }),
+  }
+}
+
+export type AgentView = ReturnType<typeof useAgent>
+
+/** One agent's column in Compy: header, transcript, changed files, subagents and context. */
+export function AgentPanel(props: { side: CompySide; arena: ArenaController }) {
+  const language = useLanguage()
+  const agent = useAgent(props.arena, () => props.side)
+
+  return (
+    <section data-slot="compy-panel" data-side={props.side} aria-label={agent.label()} class="flex min-h-0 flex-col">
+      <AgentHeader side={props.side} arena={props.arena} agent={agent} />
+      <Transcript messages={agent.messages()} running={agent.running()} sessionID={agent.sessionID()} />
+      <ChangesNavigator
+        sessionID={agent.sessionID()}
+        messages={agent.messages()}
+        running={agent.running()}
+        title={language.t("compy.changes.title")}
+      />
+      <Subagents agent={agent} />
+      <ContextMeter
+        usage={agent.usage()}
+        limit={agent.model()?.limit.context ?? 0}
+        tokens={agent.totals().tokens}
+        cost={agent.totals().cost}
+      />
+    </section>
+  )
+}
+
+/** The agent's name, whether it is working, a link to its session and its model picker. */
+export function AgentHeader(props: { side: CompySide; arena: ArenaController; agent: AgentView }) {
+  const language = useLanguage()
+  const server = useServer()
+  const navigate = useNavigate()
+
+  return (
+    <header data-slot="compy-agent-header">
+      <div class="flex h-7 items-center gap-2">
+        <span data-slot="compy-agent-mark" aria-hidden="true" />
+        <h2 class="text-[14px] font-medium leading-[var(--line-height-base)] text-v2-text-text-base">
+          {props.agent.label()}
+        </h2>
+        <Show
+          when={props.agent.running()}
+          fallback={
+            <span data-slot="compy-agent-status" data-state="idle">
+              {language.t("compy.agent.idle")}
+            </span>
+          }
+        >
+          <span data-slot="compy-agent-status" data-state="running">
+            <Spinner class="size-3.5" />
+            {language.t("compy.agent.working")}
+          </span>
+        </Show>
+        <div class="flex-1" />
+        <Show when={props.agent.sessionID()}>
+          {(id) => (
+            <Tooltip placement="bottom" value={language.t("compy.agent.open")}>
+              <IconButton
+                icon={<Icon name="arrow-up-right" size="small" />}
+                variant="ghost"
+                size="small"
+                aria-label={language.t("compy.agent.open")}
+                onClick={() => navigate(sessionHref(server.key, id()))}
+              />
+            </Tooltip>
+          )}
+        </Show>
+      </div>
+      <Select
+        options={props.arena.models()}
+        current={props.agent.model()}
+        value={(item) => `${item.provider.id}/${item.id}`}
+        label={(item) => item.name}
+        groupBy={(item) => item.provider.name}
+        placeholder={language.t("compy.agent.modelPlaceholder")}
+        onSelect={(item) => {
+          if (!item) return
+          props.arena.setModel(props.side, item).catch(() =>
+            showToast({ variant: "error", title: language.t("compy.workspace.sendFailed", { agent: props.agent.label() }) }),
+          )
+        }}
+      />
+    </header>
+  )
+}
+
+/** The agent's subagents, each with its tokens and cost. */
+export function Subagents(props: { agent: AgentView }) {
+  const language = useLanguage()
+  const data = useData()
 
   const compact = createMemo(
     () => new Intl.NumberFormat(language.intl(), { notation: "compact", maximumFractionDigits: 1 }),
@@ -75,103 +171,47 @@ export function AgentPanel(props: { side: CompySide; arena: ArenaController; cha
   )
 
   return (
-    <section data-slot="compy-panel" data-side={props.side} aria-label={label()} class="flex min-h-0 flex-col">
-      <header data-slot="compy-agent-header">
-        <div class="flex h-7 items-center gap-2">
-          <span data-slot="compy-agent-mark" aria-hidden="true" />
-          <h2 class="text-[14px] font-medium leading-[var(--line-height-base)] text-v2-text-text-base">{label()}</h2>
-          <Show
-            when={running()}
-            fallback={
-              <span data-slot="compy-agent-status" data-state="idle">
-                {language.t("compy.agent.idle")}
-              </span>
-            }
-          >
-            <span data-slot="compy-agent-status" data-state="running">
-              <Spinner class="size-3.5" />
-              {language.t("compy.agent.working")}
-            </span>
-          </Show>
-          <div class="flex-1" />
-          <Show when={sessionID()}>
-            {(id) => (
-              <Tooltip placement="bottom" value={language.t("compy.agent.open")}>
-                <IconButton
-                  icon={<Icon name="arrow-up-right" size="small" />}
-                  variant="ghost"
-                  size="small"
-                  aria-label={language.t("compy.agent.open")}
-                  onClick={() => navigate(sessionHref(server.key, id()))}
-                />
-              </Tooltip>
-            )}
-          </Show>
-        </div>
-        <Select
-          options={props.arena.models()}
-          current={model()}
-          value={(item) => `${item.provider.id}/${item.id}`}
-          label={(item) => item.name}
-          groupBy={(item) => item.provider.name}
-          placeholder={language.t("compy.agent.modelPlaceholder")}
-          onSelect={(item) => {
-            if (!item) return
-            props.arena.setModel(props.side, item).catch(() =>
-              showToast({ variant: "error", title: language.t("compy.workspace.sendFailed", { agent: label() }) }),
-            )
-          }}
-        />
-      </header>
-
-      <Transcript messages={messages()} running={running()} sessionID={sessionID()} />
-
-      <ChangesNavigator
-        sessionID={props.arena.sessionID(changesSide())}
-        messages={props.arena.messages(changesSide())}
-        running={props.arena.running(changesSide())}
-        title={language.t(changesSide() === props.side ? "compy.changes.title" : "compy.changes.review")}
-      />
-
-      <section data-slot="compy-subagents" aria-label={language.t("compy.subagents.title")}>
-        <div class="flex items-center gap-2">
-          <h3 data-slot="compy-eyebrow">{language.t("compy.subagents.title")}</h3>
-          <Show when={subagents().length > 0}>
-            <span data-slot="compy-count">{subagents().length}</span>
-          </Show>
-        </div>
-        <Show
-          when={subagents().length > 0}
-          fallback={<p class="text-[12px] text-v2-text-text-muted">{language.t("compy.subagents.empty")}</p>}
-        >
-          <ul data-scrollable class="flex max-h-[132px] min-h-0 flex-col gap-0.5 overflow-y-auto">
-            <For each={subagents()}>
-              {(child) => (
-                <li data-slot="compy-subagent">
-                  <Show
-                    when={data.session.status(child.id) === "running"}
-                    fallback={<span data-slot="compy-subagent-dot" aria-hidden="true" />}
-                  >
-                    <Spinner class="size-3.5 shrink-0" />
-                  </Show>
-                  <span class="min-w-0 flex-1 truncate text-v2-text-text-base">{child.title ?? child.agent}</span>
-                  <span class="font-mono tabular-nums">
-                    {language.t("compy.usage.tokens", { tokens: compact().format(totalTokens(child.tokens)) })}
-                  </span>
-                  <span class="font-mono tabular-nums text-v2-text-text-base">{money().format(child.cost)}</span>
-                </li>
-              )}
-            </For>
-          </ul>
+    <section data-slot="compy-subagents" aria-label={language.t("compy.subagents.title")}>
+      <div class="flex items-center gap-2">
+        <h3 data-slot="compy-eyebrow">{language.t("compy.subagents.title")}</h3>
+        <Show when={props.agent.subagents().length > 0}>
+          <span data-slot="compy-count">{props.agent.subagents().length}</span>
         </Show>
-      </section>
-
-      <ContextMeter usage={usage()} tokens={totals().tokens} cost={totals().cost} />
+      </div>
+      <Show
+        when={props.agent.subagents().length > 0}
+        fallback={<p class="text-[12px] text-v2-text-text-muted">{language.t("compy.subagents.empty")}</p>}
+      >
+        <ul data-scrollable class="flex max-h-[132px] min-h-0 flex-col gap-0.5 overflow-y-auto">
+          <For each={props.agent.subagents()}>
+            {(child) => (
+              <li data-slot="compy-subagent">
+                <Show
+                  when={data.session.status(child.id) === "running"}
+                  fallback={<span data-slot="compy-subagent-dot" aria-hidden="true" />}
+                >
+                  <Spinner class="size-3.5 shrink-0" />
+                </Show>
+                <span class="min-w-0 flex-1 truncate text-v2-text-text-base">{child.title ?? child.agent}</span>
+                <span class="font-mono tabular-nums">
+                  {language.t("compy.usage.tokens", { tokens: compact().format(totalTokens(child.tokens)) })}
+                </span>
+                <span class="font-mono tabular-nums text-v2-text-text-base">{money().format(child.cost)}</span>
+              </li>
+            )}
+          </For>
+        </ul>
+      </Show>
     </section>
   )
 }
 
-function Transcript(props: { messages: readonly SessionMessageInfo[]; running: boolean; sessionID?: string }) {
+export function Transcript(props: {
+  messages: readonly SessionMessageInfo[]
+  running: boolean
+  sessionID?: string
+  empty?: string
+}) {
   const language = useLanguage()
   let scroller: HTMLDivElement | undefined
   let pinned = true
@@ -209,7 +249,7 @@ function Transcript(props: { messages: readonly SessionMessageInfo[]; running: b
     >
       <Show
         when={props.messages.some((message) => message.type === "user" || message.type === "assistant")}
-        fallback={<p data-slot="compy-empty">{language.t("compy.agent.empty")}</p>}
+        fallback={<p data-slot="compy-empty">{props.empty ?? language.t("compy.agent.empty")}</p>}
       >
         <For each={props.messages}>
           {(message) => (

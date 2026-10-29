@@ -1,7 +1,7 @@
 [data-component="compy-hero"] {
-  --hero-a: var(--compy-teal, #2ee6c5);
-  --hero-b: var(--compy-cyan, #38bdf8);
-  --hero-c: var(--compy-violet, #a78bfa);
+  --hero-a: var(--compy-a, var(--compy-teal, #2ee6c5));
+  --hero-b: var(--compy-c, var(--compy-cyan, #38bdf8));
+  --hero-c: var(--compy-b, var(--compy-violet, #a78bfa));
   position: relative;
   isolation: isolate;
   display: flex;
@@ -49,7 +49,8 @@
   max-width: 560px;
   font-family: var(--font-family-accent);
   font-style: italic;
-  font-size: 22px;
+  font-weight: 500;
+  font-size: 18px;
   line-height: var(--line-height-base);
   color: var(--v2-text-text-muted);
 }

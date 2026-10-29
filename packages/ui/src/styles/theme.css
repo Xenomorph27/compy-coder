@@ -6,7 +6,7 @@
     "Geist Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-family-mono--font-feature-settings: normal;
   /* The italic display accent: hero taglines, headings and empty states, never running text. */
-  --font-family-accent: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+  --font-family-accent: "Instrument Sans", "Geist", ui-sans-serif, system-ui, sans-serif;
 
   --font-size-small: 13px;
   --font-size-base: 14px;

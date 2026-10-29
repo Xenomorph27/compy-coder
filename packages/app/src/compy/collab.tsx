@@ -1,4 +1,3 @@
-import { Markdown } from "@opencode/session-ui/markdown"
 import { Button } from "@opencode/ui/button"
 import { Icon } from "@opencode/ui/icon"
 import { Spinner } from "@opencode/ui/spinner"
@@ -8,8 +7,11 @@ import { createStore } from "solid-js/store"
 import { useLanguage } from "@/runtime/i18n/language"
 import { useServerSDK } from "@/runtime/server/client"
 import { showToast } from "@/shell/notifications/toast"
+import { AgentHeader, Subagents, Transcript, useAgent } from "./agent"
 import type { ArenaController, ArenaProject } from "./arena"
+import { ChangesNavigator } from "./changes"
 import { builderDone, collabPrompt, reviewVerdict } from "./collab-prompts"
+import { ContextMeter } from "./context-meter"
 import { agentLabelKey, COMPY_SIDES, useCompy, type CompySide } from "./state"
 import { promptReplies } from "./usage"
 
@@ -17,9 +19,10 @@ import { promptReplies } from "./usage"
 const AUTO_LIMIT = 10
 
 /**
- * Collab: the builder (left) builds one checkpoint at a time and stops; the validator (right) reviews the project
- * read-only; its review goes back to the builder, which fixes and builds the next checkpoint. The hand-offs run on
- * their own until the validator approves a checkpoint the builder marked as the last one.
+ * Collab: the builder builds one checkpoint at a time and stops; the validator reviews the project read-only; its
+ * review goes back to the builder, which fixes and builds the next checkpoint. The hand-offs run on their own until the
+ * validator approves a checkpoint the builder marked as the last one. The builder gets the main section, the validator
+ * a slim column at the right, and both context windows sit in one strip along the bottom.
  */
 export function CollabWorkspace(props: { arena: ArenaController; directory: string; project?: ArenaProject }) {
   const compy = useCompy()
@@ -27,6 +30,8 @@ export function CollabWorkspace(props: { arena: ArenaController; directory: stri
   const serverSDK = useServerSDK()
   // The route only renders the workspace while an arena is open.
   const open = () => compy.arena()!
+  const builder = useAgent(props.arena, () => "left")
+  const validator = useAgent(props.arena, () => "right")
 
   // `sent` is each agent's prompt count just before Compy last sent to it: a reply only counts once a newer prompt has
   // landed. `passes` lets a user-resumed run go past the automatic hold.
@@ -143,132 +148,162 @@ export function CollabWorkspace(props: { arena: ArenaController; directory: stri
     return open().phase === "build" ? ("building" as const) : ("reviewing" as const)
   })
 
+  const verdict = () =>
+    props.arena.reply("right") && !props.arena.running("right") ? reviewVerdict(props.arena.reply("right")) : undefined
+
   return (
-    <section data-slot="compy-panel" data-side="center" aria-label={language.t("collab.workspace.title")}>
-      <header class="flex items-center gap-2">
-        <h2 data-slot="compy-title">{language.t("collab.workspace.title")}</h2>
-        <div class="min-w-0 flex-1" />
-        <span data-slot="compy-project" title={props.directory}>
-          <Icon name="folder" size="small" />
-          <span class="truncate">{props.project?.name || getFilename(props.directory)}</span>
-        </span>
-        <Button variant="ghost" size="small" icon="outline-arrow-left" onClick={() => compy.close()}>
-          {language.t("collab.workspace.all")}
-        </Button>
-      </header>
-
-      <label class="flex flex-col gap-1.5">
-        <span data-slot="compy-eyebrow">{language.t("collab.workspace.task")}</span>
-        <textarea
-          data-slot="compy-topic"
-          rows={3}
-          value={open().topic}
-          disabled={open().phase !== "idle"}
-          placeholder={language.t("collab.workspace.taskPlaceholder")}
-          onInput={(event) => compy.setTopic(event.currentTarget.value)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) start()
-          }}
-        />
-      </label>
-
-      <div class="flex items-center gap-3">
-        <p data-slot="collab-status" data-state={status()} class="min-w-0 flex-1">
-          <Show when={status() === "building" || status() === "reviewing"}>
-            <Spinner class="size-3.5 shrink-0" />
-          </Show>
-          <span class="truncate">
-            {language.t(`collab.status.${status()}`, {
-              checkpoint: open().phase === "build" ? open().step + 1 : open().step,
-              builder: label("left"),
-              validator: label("right"),
-            })}
+    <div data-slot="collab-layout" class="grid min-h-0 flex-1 gap-2">
+      <section
+        data-slot="compy-panel"
+        data-side="left"
+        data-role="main"
+        aria-label={language.t("collab.workspace.title")}
+      >
+        <header class="flex items-center gap-2">
+          <h2 data-slot="compy-title">{language.t("collab.workspace.title")}</h2>
+          <div class="min-w-0 flex-1" />
+          <span data-slot="compy-project" title={props.directory}>
+            <Icon name="folder" size="small" />
+            <span class="truncate">{props.project?.name || getFilename(props.directory)}</span>
           </span>
-        </p>
-        <Switch>
-          <Match when={status() === "failed"}>
-            <Button data-slot="compy-advance" variant="contrast" icon="reset" onClick={retry}>
-              {language.t("compy.workspace.action.retry")}
-            </Button>
-          </Match>
-          <Match when={open().phase === "idle"}>
-            <Button
-              data-slot="compy-advance"
-              variant="contrast"
-              disabled={status() !== "ready" || !open().topic.trim() || flow.sending}
-              onClick={start}
-            >
-              {language.t("collab.action.start")}
-            </Button>
-          </Match>
-          <Match when={open().phase !== "done"}>
-            <Button variant="ghost" size="small" onClick={() => compy.setPhase("done")}>
-              {language.t("collab.action.finish")}
-            </Button>
-            <Show
-              when={open().paused}
-              fallback={
-                <Button variant="outline" onClick={() => compy.setPaused(true)}>
-                  {language.t("collab.action.pause")}
-                </Button>
-              }
-            >
-              <Button data-slot="compy-advance" variant="contrast" onClick={resume}>
-                {language.t("collab.action.resume")}
-              </Button>
-            </Show>
-          </Match>
-        </Switch>
-      </div>
+          <Button variant="ghost" size="small" icon="outline-arrow-left" onClick={() => compy.close()}>
+            {language.t("collab.workspace.all")}
+          </Button>
+        </header>
 
-      <Show when={checkpoints().length > 0}>
-        <ol data-slot="collab-checkpoints" aria-label={language.t("collab.workspace.checkpoints")}>
-          <For each={checkpoints()}>
-            {(item) => (
-              <li data-state={item.state} title={item.summary.slice(0, 280)}>
-                <span data-slot="collab-checkpoint-dot" aria-hidden="true" />
-                {language.t("collab.checkpoint.label", { checkpoint: item.number })}
-                <span data-slot="collab-checkpoint-state">{language.t(`collab.checkpoint.${item.state}`)}</span>
-              </li>
-            )}
-          </For>
-        </ol>
-      </Show>
-
-      <section aria-label={language.t("collab.workspace.latest")} class="flex min-h-0 flex-1 flex-col gap-2">
-        <h3 data-slot="compy-eyebrow">{language.t("collab.workspace.latest")}</h3>
-        <div class="grid min-h-0 flex-1 grid-cols-2 gap-2">
-          <For each={COMPY_SIDES}>
-            {(side) => (
-              <article data-slot="compy-plan" data-side={side}>
-                <h4>
-                  <span data-slot="compy-agent-mark" aria-hidden="true" />
-                  {language.t(side === "left" ? "collab.workspace.build" : "collab.workspace.review")}
-                  <Show when={side === "right" && props.arena.reply("right") && !props.arena.running("right")}>
-                    <span data-slot="collab-verdict" data-state={reviewVerdict(props.arena.reply("right"))}>
-                      {language.t(`collab.checkpoint.${reviewVerdict(props.arena.reply("right"))}`)}
-                    </span>
-                  </Show>
-                </h4>
-                <div data-scrollable class="min-h-0 flex-1 overflow-y-auto">
-                  <Show
-                    when={props.arena.reply(side)}
-                    fallback={<p data-slot="compy-empty">{language.t("collab.workspace.nothing")}</p>}
+        <div data-slot="collab-brief">
+          <label class="flex min-w-0 flex-col gap-1.5">
+            <span data-slot="compy-eyebrow">{language.t("collab.workspace.task")}</span>
+            <textarea
+              data-slot="compy-topic"
+              rows={4}
+              value={open().topic}
+              disabled={open().phase !== "idle"}
+              placeholder={language.t("collab.workspace.taskPlaceholder")}
+              onInput={(event) => compy.setTopic(event.currentTarget.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) start()
+              }}
+            />
+          </label>
+          <div data-slot="collab-builder">
+            <AgentHeader side="left" arena={props.arena} agent={builder} />
+            <p data-slot="collab-status" data-state={status()}>
+              <Show when={status() === "building" || status() === "reviewing"}>
+                <Spinner class="size-3.5 shrink-0" />
+              </Show>
+              <span class="min-w-0">
+                {language.t(`collab.status.${status()}`, {
+                  checkpoint: open().phase === "build" ? open().step + 1 : open().step,
+                  builder: label("left"),
+                  validator: label("right"),
+                })}
+              </span>
+            </p>
+            <div class="mt-auto flex flex-wrap items-center justify-end gap-2">
+              <Switch>
+                <Match when={status() === "failed"}>
+                  <Button data-slot="compy-advance" variant="contrast" icon="reset" onClick={retry}>
+                    {language.t("compy.workspace.action.retry")}
+                  </Button>
+                </Match>
+                <Match when={open().phase === "idle"}>
+                  <Button
+                    data-slot="compy-advance"
+                    variant="contrast"
+                    disabled={status() !== "ready" || !open().topic.trim() || flow.sending}
+                    onClick={start}
                   >
-                    {(text) => (
-                      <Markdown
-                        text={text()}
-                        cacheKey={`collab:${side}:${props.arena.sessionID(side)}:${prompts(side)}`}
-                        streaming={props.arena.running(side)}
-                      />
-                    )}
+                    {language.t("collab.action.start")}
+                  </Button>
+                </Match>
+                <Match when={open().phase !== "done"}>
+                  <Button variant="ghost" size="small" onClick={() => compy.setPhase("done")}>
+                    {language.t("collab.action.finish")}
+                  </Button>
+                  <Show
+                    when={open().paused}
+                    fallback={
+                      <Button variant="outline" onClick={() => compy.setPaused(true)}>
+                        {language.t("collab.action.pause")}
+                      </Button>
+                    }
+                  >
+                    <Button data-slot="compy-advance" variant="contrast" onClick={resume}>
+                      {language.t("collab.action.resume")}
+                    </Button>
                   </Show>
-                </div>
-              </article>
-            )}
-          </For>
+                </Match>
+              </Switch>
+            </div>
+          </div>
+        </div>
+
+        <Show when={checkpoints().length > 0}>
+          <ol data-slot="collab-checkpoints" aria-label={language.t("collab.workspace.checkpoints")}>
+            <For each={checkpoints()}>
+              {(item) => (
+                <li data-state={item.state} title={item.summary.slice(0, 280)}>
+                  <span data-slot="collab-checkpoint-dot" aria-hidden="true" />
+                  {language.t("collab.checkpoint.label", { checkpoint: item.number })}
+                  <span data-slot="collab-checkpoint-state">{language.t(`collab.checkpoint.${item.state}`)}</span>
+                </li>
+              )}
+            </For>
+          </ol>
+        </Show>
+
+        <div data-slot="collab-body">
+          <Transcript
+            messages={builder.messages()}
+            running={builder.running()}
+            sessionID={builder.sessionID()}
+            empty={language.t("collab.workspace.builderEmpty")}
+          />
+          <aside data-scrollable class="flex min-h-0 flex-col gap-5 overflow-y-auto">
+            <ChangesNavigator
+              sessionID={builder.sessionID()}
+              messages={builder.messages()}
+              running={builder.running()}
+              title={language.t("compy.changes.title")}
+            />
+            <Subagents agent={builder} />
+          </aside>
         </div>
       </section>
-    </section>
+
+      <section data-slot="compy-panel" data-side="right" data-role="reviewer" aria-label={validator.label()}>
+        <AgentHeader side="right" arena={props.arena} agent={validator} />
+        <Show when={verdict()}>
+          {(state) => (
+            <span data-slot="collab-verdict" data-state={state()}>
+              {language.t(`collab.checkpoint.${state()}`)}
+            </span>
+          )}
+        </Show>
+        <Transcript
+          messages={validator.messages()}
+          running={validator.running()}
+          sessionID={validator.sessionID()}
+          empty={language.t("collab.workspace.reviewerEmpty")}
+        />
+        <Subagents agent={validator} />
+      </section>
+
+      <section data-slot="collab-context" aria-label={language.t("compy.context.title")}>
+        <For each={[builder, validator]}>
+          {(agent) => (
+            <ContextMeter
+              usage={agent.usage()}
+              limit={agent.model()?.limit.context ?? 0}
+              tokens={agent.totals().tokens}
+              cost={agent.totals().cost}
+              label={agent.label()}
+              model={agent.model()?.name}
+            />
+          )}
+        </For>
+      </section>
+    </div>
   )
 }

@@ -37,6 +37,7 @@ export function CompyRoute() {
   return (
     <div
       data-component="compy"
+      data-kind={compy.kind() ?? "compete"}
       class="relative flex size-full min-h-0 flex-col px-[var(--shell-inline-inset,8px)] pb-[var(--shell-bottom-inset,8px)] pt-[var(--shell-top-inset,8px)]"
     >
       <Show when={compy.arena() && conn() ? compy.arena()!.id : undefined} keyed fallback={<CompyLobby />}>
