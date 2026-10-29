@@ -1,10 +1,11 @@
-import { createEffect, createMemo, on } from "solid-js"
+import { createEffect, createMemo, on, Show } from "solid-js"
 import { useLocal } from "@/providers/models/selection"
 import { useLanguage } from "@/runtime/i18n/language"
 import { useServerSDK } from "@/runtime/server/client"
 import { useData } from "@/runtime/server/current"
 import { AgentPanel } from "./agent"
-import { COMPY_SIDES, useCompy, type CompySide } from "./state"
+import { CollabWorkspace } from "./collab"
+import { agentLabelKey, COMPY_SIDES, useCompy, type CompySide } from "./state"
 import { latestFailure, latestPrompt, latestReply } from "./usage"
 import { CompyWorkspace } from "./workspace"
 
@@ -95,7 +96,10 @@ function createArenaController(directory: string) {
 
       if (id) await serverSDK.api.session.switchModel({ sessionID: id, model: { id: item.id, providerID: item.provider.id } })
     },
-    /** Sends to an agent, creating its session first. Debate sessions run the read-only plan agent when it exists. */
+    /**
+     * Sends to an agent, creating its session first. Debaters and the collab validator run the read-only plan agent
+     * when it exists; the collab builder runs the build agent, so it can change files.
+     */
     send(side: CompySide, text: string) {
       const model = controller.model(side)
 
@@ -105,10 +109,12 @@ function createArenaController(directory: string) {
       if (existing) return data.session.prompt({ sessionID: existing, text })
 
       const agents = local.agent.list()
+      const kind = compy.arena()?.kind ?? "compete"
+      const role = kind === "collab" && side === "left" ? "build" : "plan"
 
       const created = data.session.create({
-        agent: (agents.find((item) => item.name === "plan") ?? local.agent.current())?.name,
-        title: language.t(side === "left" ? "compy.agent.left" : "compy.agent.right"),
+        agent: (agents.find((item) => item.name === role) ?? local.agent.current())?.name,
+        title: language.t(agentLabelKey(kind, side)),
         model: { id: model.id, providerID: model.provider.id },
         location: { directory },
       })
@@ -123,13 +129,21 @@ function createArenaController(directory: string) {
 }
 
 export function CompyArena(props: { directory: string; project?: ArenaProject }) {
+  const compy = useCompy()
   const arena = createArenaController(props.directory)
+  const collab = () => compy.arena()?.kind === "collab"
 
   return (
-    <div data-slot="compy-arena" class="grid min-h-0 flex-1 gap-2">
+    <div data-slot="compy-arena" data-kind={collab() ? "collab" : "compete"} class="grid min-h-0 flex-1 gap-2">
       <AgentPanel side="left" arena={arena} />
-      <CompyWorkspace arena={arena} directory={props.directory} project={props.project} />
-      <AgentPanel side="right" arena={arena} />
+      <Show
+        when={collab()}
+        fallback={<CompyWorkspace arena={arena} directory={props.directory} project={props.project} />}
+      >
+        <CollabWorkspace arena={arena} directory={props.directory} project={props.project} />
+      </Show>
+      {/* The validator changes nothing itself, so its navigator follows the builder's changes under review. */}
+      <AgentPanel side="right" arena={arena} changes={collab() ? "left" : "right"} />
     </div>
   )
 }

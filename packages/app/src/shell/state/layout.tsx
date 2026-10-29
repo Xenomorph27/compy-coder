@@ -73,7 +73,7 @@ export const currentRoute = (pathname: string, search: string): LayoutRoute => {
 
   if (parts[0] === "components") return { type: "components" }
 
-  if (parts[0] === "compy") return { type: "compy" }
+  if (parts[0] === "compy" || parts[0] === "collab") return { type: "compy" }
 
   if (parts[0] === "new-session") {
     const draftID = new URLSearchParams(search).get("draftId")

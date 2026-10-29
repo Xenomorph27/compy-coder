@@ -43,6 +43,15 @@
   font-display: swap;
 }
 
+/* The italic accent face for display lines (Instrument Serif, SIL Open Font License: public/assets/InstrumentSerif-LICENSE.txt). */
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("/assets/InstrumentSerif-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* Text covers every weight below bold, so only bold syntax tokens and markup load the Bold face. */
 @font-face {
   font-family: "IBM Plex Mono";
