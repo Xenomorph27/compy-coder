@@ -4,10 +4,10 @@ export default {
   "action.checking": "Memeriksa…",
   "action.downloading": "Mengunduh…",
   "action.installRestart": "Instal dan mulai ulang",
-  "action.download": "Unduh OpenCode",
+  "action.download": "Unduh Compy Code",
   "action.installing": "Menginstal…",
   "toast.latest.title": "Versi Anda sudah terbaru",
-  "toast.latest.description": "Anda menjalankan versi terbaru OpenCode.",
+  "toast.latest.description": "Anda menjalankan versi terbaru Compy Code.",
   "migration.title": "Beralih dari Beta ke Stabil",
   "migration.description":
     "Untuk saat ini, OpenCode Beta sedang beralih ke OpenCode Stabil. Unduh versi {{version}}, lalu instal OpenCode dari citra diska agar terus menerima pembaruan.",

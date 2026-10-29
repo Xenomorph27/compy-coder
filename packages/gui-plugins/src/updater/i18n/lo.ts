@@ -4,10 +4,10 @@ export default {
   "action.checking": "ກຳລັງກວດສອບ…",
   "action.downloading": "ກຳລັງດາວໂຫຼດ…",
   "action.installRestart": "ຕິດຕັ້ງ ແລະປິດເປີດໃໝ່",
-  "action.download": "ດາວໂຫຼດ OpenCode",
+  "action.download": "ດາວໂຫຼດ Compy Code",
   "action.installing": "ກຳລັງຕິດຕັ້ງ…",
   "toast.latest.title": "ທ່ານອັບເດດແລ້ວ",
-  "toast.latest.description": "ທ່ານກຳລັງໃຊ້ OpenCode ເວີຊັນຫຼ້າສຸດ.",
+  "toast.latest.description": "ທ່ານກຳລັງໃຊ້ Compy Code ເວີຊັນຫຼ້າສຸດ.",
   "migration.title": "ຍ້າຍຈາກ Beta ໄປ Stable",
   "migration.description":
     "ໃນຕອນນີ້ OpenCode Beta ກຳລັງຍ້າຍໄປ OpenCode Stable. ດາວໂຫຼດເວີຊັນ {{version}} ແລ້ວຕິດຕັ້ງ OpenCode ຈາກອິມເມດດິສກ໌ ເພື່ອສືບຕໍ່ຮັບອັບເດດ.",

@@ -4,10 +4,10 @@ export default {
   "action.checking": "Menyemak…",
   "action.downloading": "Memuat turun…",
   "action.installRestart": "Pasang dan mulakan semula",
-  "action.download": "Muat turun OpenCode",
+  "action.download": "Muat turun Compy Code",
   "action.installing": "Sedang memasang…",
   "toast.latest.title": "Anda sudah terkini",
-  "toast.latest.description": "Anda sedang menggunakan versi terkini OpenCode.",
+  "toast.latest.description": "Anda sedang menggunakan versi terkini Compy Code.",
   "migration.title": "Beralih daripada Beta kepada Stabil",
   "migration.description":
     "Buat masa ini, OpenCode Beta sedang beralih kepada OpenCode Stabil. Muat turun versi {{version}}, kemudian pasang OpenCode daripada imej cakera untuk terus menerima kemas kini.",

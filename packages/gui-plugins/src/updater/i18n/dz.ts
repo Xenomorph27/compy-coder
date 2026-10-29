@@ -4,10 +4,10 @@ export default {
   "action.checking": "ཞིབ་དཔྱད་འབད་དོ།",
   "action.downloading": "ཕབ་ལེན་འབད་དོ།",
   "action.installRestart": "གཞི་བཙུགས་དང་ལོག་འགོ་བཙུགས།",
-  "action.download": "OpenCode ཕབ་ལེན་འབད།",
+  "action.download": "Compy Code ཕབ་ལེན་འབད།",
   "action.installing": "གཞི་བཙུགས་འབད་དོ།",
   "toast.latest.title": "ཁྱོད་དུས་དང་བསྟུན།",
-  "toast.latest.description": "ཁྱོད་ཀྱིས་ OpenCodeགི་ཐོན་རིམ་གསརཔ་འདི་གཡོག་བཀོལ་དོ།",
+  "toast.latest.description": "ཁྱོད་ཀྱིས་ Compy Codeགི་ཐོན་རིམ་གསརཔ་འདི་གཡོག་བཀོལ་དོ།",
   "migration.title": "Beta ལས་ Stable ལུ་སྤོ།",
   "migration.description":
     "ད་ལྟོའི་རིང་ལུ་ OpenCode Beta འདི་ OpenCode Stable ལུ་སྤོ་དོ། དུས་མཐུན་ཚུ་འཕྲོ་མཐུད་དེ་ཐོབ་ནི་ལུ་ ཐོན་རིམ་ {{version}} ཕབ་ལེན་འབད་དེ་ ཌིཀསི་གཟུགས་བརྙན་ལས་ OpenCode གཞི་བཙུགས་འབད།",

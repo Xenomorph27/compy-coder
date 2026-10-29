@@ -4,10 +4,10 @@ export default {
   "action.checking": "Tjekker…",
   "action.downloading": "Downloader…",
   "action.installRestart": "Installer og genstart",
-  "action.download": "Hent OpenCode",
+  "action.download": "Hent Compy Code",
   "action.installing": "Installerer…",
   "toast.latest.title": "Du er opdateret",
-  "toast.latest.description": "Du kører den nyeste version af OpenCode.",
+  "toast.latest.description": "Du kører den nyeste version af Compy Code.",
   "migration.title": "Skift fra Beta til Stabil",
   "migration.description":
     "OpenCode Beta flyttes indtil videre til OpenCode Stabil. Download version {{version}}, og installer derefter OpenCode fra diskaftrykket for fortsat at modtage opdateringer.",

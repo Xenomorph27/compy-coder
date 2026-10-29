@@ -4,10 +4,10 @@ export default {
   "action.checking": "Tekshirilmoqda…",
   "action.downloading": "Yuklab olinmoqda…",
   "action.installRestart": "O'rnating va qayta ishga tushiring",
-  "action.download": "OpenCode-ni yuklab olish",
+  "action.download": "Compy Code-ni yuklab olish",
   "action.installing": "Oʻrnatilmoqda…",
   "toast.latest.title": "Siz yangilangansiz",
-  "toast.latest.description": "Siz OpenCode oxirgi versiyasini ishga tushiryapsiz.",
+  "toast.latest.description": "Siz Compy Code oxirgi versiyasini ishga tushiryapsiz.",
   "migration.title": "Beta-dan Stable-ga o‘tish",
   "migration.description":
     "Hozircha OpenCode Beta OpenCode Stable-ga o‘tmoqda. Yangilanishlarni olishda davom etish uchun {{version}} versiyasini yuklab oling, so‘ng OpenCode-ni disk tasviridan o‘rnating.",

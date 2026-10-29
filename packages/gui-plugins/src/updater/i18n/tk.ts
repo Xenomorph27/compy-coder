@@ -4,10 +4,10 @@ export default {
   "action.checking": "Barlamak …",
   "action.downloading": "Ingüklemek …",
   "action.installRestart": "Guruň we täzeden açyň",
-  "action.download": "OpenCode-y ýükläp al",
+  "action.download": "Compy Code-y ýükläp al",
   "action.installing": "Gurmak …",
   "toast.latest.title": "Döwrebap",
-  "toast.latest.description": "OpenCode-iň iň soňky wersiýasyny işleýärsiňiz.",
+  "toast.latest.description": "Compy Code-iň iň soňky wersiýasyny işleýärsiňiz.",
   "migration.title": "Beta-dan Stable-a geç",
   "migration.description":
     "Häzirlikçe OpenCode Beta OpenCode Stable-a geçýär. Täzelenmeleri almagy dowam etdirmek üçin {{version}} wersiýasyny ýükläp alyň, soňra OpenCode-y disk şekilinden guruň.",

@@ -4,10 +4,10 @@ export default {
   "action.checking": "Tikrinama…",
   "action.downloading": "Atsisiunčiama…",
   "action.installRestart": "Įdiekite ir paleiskite iš naujo",
-  "action.download": "Atsisiųsti „OpenCode“",
+  "action.download": "Atsisiųsti „Compy Code“",
   "action.installing": "Diegiama…",
   "toast.latest.title": "Jūs esate atnaujintas",
-  "toast.latest.description": "Naudojate naujausią OpenCode versiją.",
+  "toast.latest.description": "Naudojate naujausią Compy Code versiją.",
   "migration.title": "Pereiti iš beta į stabilią versiją",
   "migration.description":
     "Kol kas „OpenCode Beta“ perkeliama į „OpenCode Stable“. Atsisiųskite {{version}} versiją, tada įdiekite „OpenCode“ iš disko atvaizdžio, kad ir toliau gautumėte naujinimus.",

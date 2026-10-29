@@ -4,10 +4,10 @@ export default {
   "action.checking": "Санҷиш…",
   "action.downloading": "Зеркашӣ карда мешавад…",
   "action.installRestart": "Насб кунед ва аз нав оғоз кунед",
-  "action.download": "OpenCode-ро боргирӣ кунед",
+  "action.download": "Compy Code-ро боргирӣ кунед",
   "action.installing": "Насб карда мешавад…",
   "toast.latest.title": "Шумо навсозӣ доред",
-  "toast.latest.description": "Шумо версияи охирини OpenCode-ро иҷро карда истодаед.",
+  "toast.latest.description": "Шумо версияи охирини Compy Code-ро иҷро карда истодаед.",
   "migration.title": "Аз Beta ба Stable гузаред",
   "migration.description":
     "Ҳоло OpenCode Beta ба OpenCode Stable мегузарад. Версияи {{version}}-ро боргирӣ кунед ва сипас OpenCode-ро аз тасвири диск насб кунед, то гирифтани навсозиҳоро идома диҳед.",

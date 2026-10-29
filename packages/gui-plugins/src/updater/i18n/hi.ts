@@ -4,10 +4,10 @@ export default {
   "action.checking": "जाँच हो रही है…",
   "action.downloading": "डाउनलोड हो रहा है…",
   "action.installRestart": "स्थापित करें और पुनः आरंभ करें",
-  "action.download": "OpenCode डाउनलोड करें",
+  "action.download": "Compy Code डाउनलोड करें",
   "action.installing": "स्थापित किया जा रहा है…",
   "toast.latest.title": "आपके पास नवीनतम संस्करण है",
-  "toast.latest.description": "आप OpenCode का नवीनतम संस्करण चला रहे हैं।",
+  "toast.latest.description": "आप Compy Code का नवीनतम संस्करण चला रहे हैं।",
   "migration.title": "बीटा से स्टेबल पर जाएँ",
   "migration.description":
     "फ़िलहाल OpenCode Beta को OpenCode Stable में बदला जा रहा है। संस्करण {{version}} डाउनलोड करें, फिर अपडेट मिलते रहने के लिए डिस्क इमेज से OpenCode इंस्टॉल करें।",

@@ -4,10 +4,10 @@ export default {
   "action.checking": "Sprawdzanie…",
   "action.downloading": "Pobieranie…",
   "action.installRestart": "Zainstaluj i uruchom ponownie",
-  "action.download": "Pobierz OpenCode",
+  "action.download": "Pobierz Compy Code",
   "action.installing": "Instalowanie…",
   "toast.latest.title": "Masz najnowszą wersję",
-  "toast.latest.description": "Korzystasz z najnowszej wersji OpenCode.",
+  "toast.latest.description": "Korzystasz z najnowszej wersji Compy Code.",
   "migration.title": "Przejdź z Beta na Stable",
   "migration.description":
     "OpenCode Beta jest obecnie przenoszony do OpenCode Stable. Pobierz wersję {{version}}, a następnie zainstaluj OpenCode z obrazu dysku, aby nadal otrzymywać aktualizacje.",

@@ -4,10 +4,10 @@ export default {
   "action.checking": "چیک کر رہیا واں…",
   "action.downloading": "ڈاؤن لوڈ کر رہیا اے…",
   "action.installRestart": "انسٹال کرو تے دوبارہ شروع کرو",
-  "action.download": "OpenCode ڈاؤن لوڈ کرو",
+  "action.download": "Compy Code ڈاؤن لوڈ کرو",
   "action.installing": "انسٹال کر رہیا اے…",
   "toast.latest.title": "تسی تازہ ترین او",
-  "toast.latest.description": "تسی OpenCode دا تازہ ترین ورژن چلا رئے او۔",
+  "toast.latest.description": "تسی Compy Code دا تازہ ترین ورژن چلا رئے او۔",
   "migration.title": "بیٹا توں مستحکم ورژن ول جاؤ",
   "migration.description":
     "فی الحال OpenCode Beta نوں OpenCode Stable وچ منتقل کیتا جا ریا اے۔ ورژن ⁨{{version}}⁩ ڈاؤن لوڈ کرو، فیر اپ ڈیٹ ملدے رہن لئی ڈسک امیج توں OpenCode انسٹال کرو۔",

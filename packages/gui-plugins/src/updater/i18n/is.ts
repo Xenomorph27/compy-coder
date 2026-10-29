@@ -4,10 +4,10 @@ export default {
   "action.checking": "Athugar…",
   "action.downloading": "Sækir…",
   "action.installRestart": "Settu upp og endurræstu",
-  "action.download": "Sækja OpenCode",
+  "action.download": "Sækja Compy Code",
   "action.installing": "Setur upp…",
   "toast.latest.title": "Þú ert uppfærður",
-  "toast.latest.description": "Þú ert að keyra nýjustu útgáfuna af OpenCode.",
+  "toast.latest.description": "Þú ert að keyra nýjustu útgáfuna af Compy Code.",
   "migration.title": "Fara úr Beta í Stöðuga útgáfu",
   "migration.description":
     "OpenCode Beta er um sinn að færast yfir í OpenCode Stable. Sæktu útgáfu {{version}} og settu síðan OpenCode upp úr diskmyndinni til að halda áfram að fá uppfærslur.",

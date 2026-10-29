@@ -4,10 +4,10 @@ export default {
   "action.checking": "Ստուգում…",
   "action.downloading": "Ներբեռնվում է…",
   "action.installRestart": "Տեղադրել և վերագործարկել",
-  "action.download": "Ներբեռնել OpenCode-ը",
+  "action.download": "Ներբեռնել Compy Code-ը",
   "action.installing": "Տեղադրվում է…",
   "toast.latest.title": "Դուք արդի եք",
-  "toast.latest.description": "Դուք օգտագործում եք OpenCode-ի վերջին տարբերակը։",
+  "toast.latest.description": "Դուք օգտագործում եք Compy Code-ի վերջին տարբերակը։",
   "migration.title": "Beta-ից անցնել Stable-ի",
   "migration.description":
     "Առայժմ OpenCode Beta-ն անցնում է OpenCode Stable-ի։ Ներբեռնեք {{version}} տարբերակը, ապա տեղադրեք OpenCode-ը սկավառակի պատկերից՝ թարմացումները շարունակելու համար։",

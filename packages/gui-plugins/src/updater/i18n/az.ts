@@ -4,10 +4,10 @@ export default {
   "action.checking": "Yoxlanılır…",
   "action.downloading": "Yüklənir…",
   "action.installRestart": "Quraşdır və yenidən başlat",
-  "action.download": "OpenCode-u endir",
+  "action.download": "Compy Code-u endir",
   "action.installing": "Quraşdırılır…",
   "toast.latest.title": "Ən son versiyadan istifadə edirsiniz",
-  "toast.latest.description": "OpenCode-un ən son versiyasından istifadə edirsiniz.",
+  "toast.latest.description": "Compy Code-un ən son versiyasından istifadə edirsiniz.",
   "migration.title": "Beta-dan Stable-a keçin",
   "migration.description":
     "Hələlik OpenCode Beta, OpenCode Stable-a keçir. Yeniləmələri almağa davam etmək üçün {{version}} versiyasını endirin, sonra OpenCode-u disk obrazından quraşdırın.",

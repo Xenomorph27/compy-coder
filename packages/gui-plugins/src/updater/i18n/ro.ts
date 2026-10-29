@@ -4,10 +4,10 @@ export default {
   "action.checking": "Se verifică…",
   "action.downloading": "Se descarcă…",
   "action.installRestart": "Instalează și repornește",
-  "action.download": "Descarcă OpenCode",
+  "action.download": "Descarcă Compy Code",
   "action.installing": "Se instalează…",
   "toast.latest.title": "Ești la zi",
-  "toast.latest.description": "Folosești cea mai recentă versiune OpenCode.",
+  "toast.latest.description": "Folosești cea mai recentă versiune Compy Code.",
   "migration.title": "Treci de la Beta la Stabil",
   "migration.description":
     "Deocamdată, OpenCode Beta trece la OpenCode Stabil. Descarcă versiunea {{version}}, apoi instalează OpenCode din imaginea de disc pentru a continua să primești actualizări.",

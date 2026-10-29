@@ -4,10 +4,10 @@ export default {
   "action.checking": "Kontrola…",
   "action.downloading": "Stahování…",
   "action.installRestart": "Nainstalujte a restartujte",
-  "action.download": "Stáhnout OpenCode",
+  "action.download": "Stáhnout Compy Code",
   "action.installing": "Instalace…",
   "toast.latest.title": "Jste aktuální",
-  "toast.latest.description": "Používáte nejnovější verzi OpenCode.",
+  "toast.latest.description": "Používáte nejnovější verzi Compy Code.",
   "migration.title": "Přejít z Beta na Stable",
   "migration.description":
     "OpenCode Beta prozatím přechází na OpenCode Stable. Stáhněte verzi {{version}} a poté nainstalujte OpenCode z obrazu disku, abyste mohli nadále dostávat aktualizace.",
