@@ -18,6 +18,7 @@ import { applyPath, backPath, forwardPath, type HistoryLocation } from "./histor
 import { TitlebarTabStrip } from "@/shell/titlebar/tab-strip"
 import { macVerticalTrafficLights, SidebarToggle } from "@/shell/sidebar-toggle"
 import { SidebarInbox } from "@/shell/titlebar/inbox"
+import { CompyModeSwitch } from "@/compy/mode-switch"
 import { makeEventListener } from "@solid-primitives/event-listener"
 import { createMediaQuery } from "@solid-primitives/media"
 import { readSessionTabsRemovedDetail, SESSION_TABS_REMOVED_EVENT } from "@/shell/titlebar/session-events"
@@ -390,6 +391,7 @@ export function Titlebar(props: { verticalTabs?: { mount?: HTMLElement } }) {
                 case "settings":
                 case "connect":
                 case "components":
+                case "compy":
                 case "home": {
                   const selection = layout.home.selection()
 
@@ -894,6 +896,9 @@ export function Titlebar(props: { verticalTabs?: { mount?: HTMLElement } }) {
                 </Show>
                 <Show when={!mobile()}>
                   <div class="flex-1" />
+                  <div class="flex shrink-0 items-center px-2">
+                    <CompyModeSwitch />
+                  </div>
                 </Show>
                 <Show when={!props.verticalTabs}>
                   <div class="relative z-20 flex shrink-0 items-center justify-end gap-0 overflow-visible">

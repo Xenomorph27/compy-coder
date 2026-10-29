@@ -14,6 +14,7 @@ import { useCurrentRoute } from "@/shell/state/layout"
 import { useTabs } from "@/shell/tabs/tabs"
 import { Persist, persisted } from "@/runtime/persistence/storage"
 import { createDesktopData } from "./data"
+import { compyRetainedSessions } from "@/compy/retained"
 import { ModelState } from "./persistence"
 import { useLanguage } from "@/runtime/i18n/language"
 import { showToast } from "@/shell/notifications/toast"
@@ -229,14 +230,18 @@ function createServerController(
 
       return route.type === "session" && route.server === connKey ? route.sessionId : undefined
     },
-    // Until the stored tabs load, keep every transcript so startup never evicts a tab's session.
+    // Until the stored tabs load, keep every transcript so startup never evicts a tab's session. The Compy arena's
+    // agents are not tabs but stay on screen, so they are kept too.
     keep: () =>
       tabs.ready()
-        ? tabs.store.flatMap((tab) =>
-            tab.type === "session" && tab.server === connKey
-              ? [tab.sessionId, ...(tab.routeSessionId ? [tab.routeSessionId] : [])]
-              : [],
-          )
+        ? [
+            ...tabs.store.flatMap((tab) =>
+              tab.type === "session" && tab.server === connKey
+                ? [tab.sessionId, ...(tab.routeSessionId ? [tab.routeSessionId] : [])]
+                : [],
+            ),
+            ...compyRetainedSessions(),
+          ]
         : data.session.list().map((session) => session.id),
     limit: 3,
   })

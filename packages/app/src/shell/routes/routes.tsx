@@ -10,6 +10,7 @@ import { SettingsSurfaceProvider } from "@/settings/surface"
 import Shell from "@/shell/shell"
 import { requireServerKey } from "./session"
 import { PluginAttachment } from "@/runtime/plugin/root"
+import { CompyProvider } from "@/compy/state"
 
 export const File = lazy(() => import("@opencode/session-ui/file").then((module) => ({ default: module.File })))
 
@@ -18,6 +19,8 @@ const loadSessionRoute = () => Promise.all([import("@/session/route"), File.prel
 const DraftRoute = lazy(() => import("@/new-session/route").then((module) => ({ default: module.DraftRoute })))
 
 const SettingsScreen = lazy(() => import("@/settings/shell").then((module) => ({ default: module.SettingsScreen })))
+
+const CompyRoute = lazy(() => import("@/compy/route").then((module) => ({ default: module.CompyRoute })))
 
 const ConnectServerScreen = lazy(() =>
   import("@/servers/connect/screen").then((module) => ({ default: module.ConnectServerScreen })),
@@ -71,6 +74,7 @@ export function AppRoutes() {
         )}
       />
       <Route path="/new-session" component={DraftRoute} />
+      <Route path="/compy" component={CompyRoute} />
       {ComponentsLab && <Route path="/components" component={ComponentsLab} />}
     </Route>
   )
@@ -109,7 +113,9 @@ function AppLayout(props: ParentProps) {
       <LayoutProvider>
         <SettingsSurfaceProvider>
           <PluginAttachment>
-            <Shell>{props.children}</Shell>
+            <CompyProvider>
+              <Shell>{props.children}</Shell>
+            </CompyProvider>
           </PluginAttachment>
         </SettingsSurfaceProvider>
       </LayoutProvider>
