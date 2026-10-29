@@ -8,8 +8,25 @@
   --compy-cyan: #38bdf8;
   --compy-violet: #a78bfa;
   --compy-aurora: linear-gradient(90deg, var(--compy-teal), var(--compy-cyan) 50%, var(--compy-violet));
-  --compy-glow-strength: 13%;
-  --compy-hairline: rgb(255 255 255 / 0.07);
+  --compy-glow-strength: 24%;
+  --compy-hairline: rgb(255 255 255 / 0.08);
+  /* The aurora lights: a broad cyan wash from the top, violet from the top right, teal rising from the bottom left. */
+  --compy-lights:
+    radial-gradient(
+      70% 460px at 50% -60px,
+      color-mix(in oklab, var(--compy-cyan) var(--compy-glow-strength), transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      45% 380px at 92% -40px,
+      color-mix(in oklab, var(--compy-violet) var(--compy-glow-strength), transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      45% 360px at 0% 108%,
+      color-mix(in oklab, var(--compy-teal) calc(var(--compy-glow-strength) * 0.6), transparent),
+      transparent 70%
+    );
   --compy-lift: inset 0 1px 0 0 rgb(255 255 255 / 0.055), 0 1px 2px rgb(0 0 0 / 0.45);
   --v2-border-border-focus: var(--compy-cyan);
   --v2-elevation-raised: var(--compy-lift), 0 0 0 1px var(--compy-hairline);
@@ -21,27 +38,28 @@
   --compy-teal: #0f9e86;
   --compy-cyan: #0369a1;
   --compy-violet: #7c5ce0;
-  --compy-glow-strength: 7%;
+  --compy-glow-strength: 10%;
   --compy-hairline: rgb(14 17 22 / 0.08);
   --compy-lift: inset 0 1px 0 0 rgb(255 255 255 / 0.7), 0 1px 2px rgb(14 17 22 / 0.1);
 }
 
-/* A 220px wash of the accent from the top edge, ending well above the content so data stays neutral. */
-:root[data-theme="compy"] [data-slot="shell"] {
+/* The lights sit behind the window chrome and again inside the main panels, so they read through the black. */
+:root[data-theme="compy"]
+  :is([data-slot="shell"], [data-slot="home-panel"], [data-component="new-session"], [data-slot="session-panel"]) {
   isolation: isolate;
-  background-image:
-    radial-gradient(60% 220px at 50% 0, color-mix(in oklab, var(--compy-cyan) var(--compy-glow-strength), transparent), transparent 70%),
-    radial-gradient(40% 180px at 85% 0, color-mix(in oklab, var(--compy-violet) var(--compy-glow-strength), transparent), transparent 70%);
+  background-image: var(--compy-lights);
+  background-repeat: no-repeat;
 }
 
-/* Film grain: 0.035 reads as texture; more looks dirty, less does nothing. */
+/* Film grain, blended so it vanishes on pure black and only textures the lit areas. */
 :root[data-theme="compy"] body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 2147483647;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.12;
+  mix-blend-mode: soft-light;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 

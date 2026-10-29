@@ -1,10 +1,9 @@
 import { Markdown } from "@opencode/session-ui/markdown"
 import { Button } from "@opencode/ui/button"
-import { Select } from "@opencode/ui/select"
+import { Icon } from "@opencode/ui/icon"
 import { getFilename } from "@opencode/util/path"
 import { createMemo, For, Show } from "solid-js"
 import { useLanguage } from "@/runtime/i18n/language"
-import { useServer } from "@/runtime/server/current"
 import { showToast } from "@/shell/notifications/toast"
 import type { ArenaController, ArenaProject } from "./arena"
 import { debatePrompt } from "./debate"
@@ -27,14 +26,15 @@ const other = (side: CompySide): CompySide => (side === "left" ? "right" : "left
 export function CompyWorkspace(props: {
   arena: ArenaController
   directory: string
-  projects: () => readonly ArenaProject[]
+  project?: ArenaProject
 }) {
   const compy = useCompy()
-  const server = useServer()
   const language = useLanguage()
+  // The route only renders the workspace while an arena is open.
+  const open = () => compy.arena()!
 
   const agentLabel = (side: CompySide) => language.t(side === "left" ? "compy.agent.left" : "compy.agent.right")
-  const next = () => COMPY_STEPS[compy.state.step]
+  const next = () => COMPY_STEPS[open().step]
   const busy = () => COMPY_SIDES.some((side) => props.arena.running(side))
   const modelsReady = () => COMPY_SIDES.every((side) => !!props.arena.model(side))
 
@@ -46,13 +46,13 @@ export function CompyWorkspace(props: {
 
     if (failed().length > 0) return "failed" as const
 
-    if (compy.state.step > 0 && COMPY_SIDES.some((side) => !props.arena.reply(side))) return "busy" as const
+    if (open().step > 0 && COMPY_SIDES.some((side) => !props.arena.reply(side))) return "busy" as const
 
     if (!next()) return "done" as const
 
     if (!modelsReady()) return "models" as const
 
-    if (compy.state.step === 0 && !compy.state.topic.trim()) return "topic" as const
+    if (open().step === 0 && !open().topic.trim()) return "topic" as const
   })
 
   const notify = (side: CompySide) => () =>
@@ -62,19 +62,17 @@ export function CompyWorkspace(props: {
     for (const side of failed()) props.arena.retry(side).catch(notify(side))
   }
 
-  const project = createMemo(() => props.projects().find((item) => item.worktree === props.directory))
-
   const advance = () => {
     const step = next()
 
     if (!step || blocked()) return
     // Read both replies before sending, so each agent gets the other's answer from the same round.
     const replies = { left: props.arena.reply("left"), right: props.arena.reply("right") }
-    compy.setStep(compy.state.step + 1)
+    compy.setStep(open().step + 1)
 
     for (const side of COMPY_SIDES)
       props.arena
-        .send(side, debatePrompt(step, { topic: compy.state.topic.trim(), other: replies[other(side)] }))
+        .send(side, debatePrompt(step, { topic: open().topic.trim(), other: replies[other(side)] }))
         .catch(notify(side))
   }
 
@@ -83,18 +81,12 @@ export function CompyWorkspace(props: {
       <header class="flex items-center gap-2">
         <h2 data-slot="compy-title">{language.t("compy.workspace.title")}</h2>
         <div class="min-w-0 flex-1" />
-        <div class="w-[220px] min-w-0">
-          <Select
-            options={[...props.projects()]}
-            current={project()}
-            value={(item) => item.worktree}
-            label={(item) => item.name || getFilename(item.worktree)}
-            placeholder={language.t("compy.workspace.projectPlaceholder")}
-            onSelect={(item) => item && compy.setProject(server.key, item.worktree)}
-          />
-        </div>
-        <Button variant="ghost" size="small" icon="reset" onClick={() => compy.reset()} disabled={busy()}>
-          {language.t("compy.workspace.action.reset")}
+        <span data-slot="compy-project" title={props.directory}>
+          <Icon name="folder" size="small" />
+          <span class="truncate">{props.project?.name || getFilename(props.directory)}</span>
+        </span>
+        <Button variant="ghost" size="small" icon="outline-arrow-left" onClick={() => compy.close()}>
+          {language.t("compy.workspace.action.arenas")}
         </Button>
       </header>
 
@@ -103,11 +95,11 @@ export function CompyWorkspace(props: {
           {(step, index) => (
             <li
               data-state={
-                index() < compy.state.step
-                  ? index() === compy.state.step - 1 && busy()
+                index() < open().step
+                  ? index() === open().step - 1 && busy()
                     ? "running"
                     : "done"
-                  : index() === compy.state.step
+                  : index() === open().step
                     ? "next"
                     : "pending"
               }
@@ -124,8 +116,8 @@ export function CompyWorkspace(props: {
         <textarea
           data-slot="compy-topic"
           rows={4}
-          value={compy.state.topic}
-          disabled={compy.state.step > 0}
+          value={open().topic}
+          disabled={open().step > 0}
           placeholder={language.t("compy.workspace.topicPlaceholder")}
           onInput={(event) => compy.setTopic(event.currentTarget.value)}
           onKeyDown={(event) => {
@@ -177,7 +169,7 @@ export function CompyWorkspace(props: {
                     {(text) => (
                       <Markdown
                         text={text()}
-                        cacheKey={`compy:plan:${side}:${props.arena.sessionID(side)}:${compy.state.step}`}
+                        cacheKey={`compy:plan:${side}:${props.arena.sessionID(side)}:${open().step}`}
                         streaming={props.arena.running(side)}
                       />
                     )}

@@ -32,6 +32,7 @@ export const Splash = (props: Pick<ComponentProps<"svg">, "ref" | "class">) => {
 }
 
 export const Logo = (props: { class?: string }) => {
+  // The product name in the UI font, stretched to the old mark's proportions so existing sizes still fit.
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -39,26 +40,18 @@ export const Logo = (props: { class?: string }) => {
       fill="none"
       classList={{ [props.class ?? ""]: !!props.class }}
     >
-      <g>
-        <path d="M24 30H6V18H24V30Z" fill="var(--icon-weak-base)" />
-        <path d="M24 12H6V30H24V36H0V6H24V12Z" fill="var(--icon-base)" />
-        <path d="M48 30H36V18H48V30Z" fill="var(--icon-weak-base)" />
-        <path d="M48 12H36V30H48V12ZM54 36H30V6H54V36Z" fill="var(--icon-base)" />
-        <path d="M72 36H66V18H72V36ZM84 36H78V18H84V36Z" fill="var(--icon-weak-base)" />
-        <path d="M60 6H90V36H84V12H78V36H72V12H66V36H60V6Z" fill="var(--icon-base)" />
-        <path d="M114 30H102V18H114V30Z" fill="var(--icon-weak-base)" />
-        <path d="M102 30H114V12H102V30ZM120 36H102V42H96V6H120V36Z" fill="var(--icon-base)" />
-        <path d="M144 24H132V12H144V24Z" fill="var(--icon-weak-base)" />
-        <path d="M126 6H132V24H144V6H150V42H126V36H144V30H126V6Z" fill="var(--icon-base)" />
-        <path d="M180 30H162V18H180V30Z" fill="var(--icon-weak-base)" />
-        <path d="M180 12H162V30H180V36H156V6H180V12Z" fill="var(--icon-strong-base)" />
-        <path d="M204 30H192V18H204V30Z" fill="var(--icon-weak-base)" />
-        <path d="M204 12H192V30H204V12ZM210 36H186V6H210V36Z" fill="var(--icon-strong-base)" />
-        <path d="M234 30H222V18H234V30Z" fill="var(--icon-weak-base)" />
-        <path d="M234 12H222V30H234V12ZM240 36H216V6H234V0H240V36Z" fill="var(--icon-strong-base)" />
-        <path d="M270 24V30H252V24H270Z" fill="var(--icon-weak-base)" />
-        <path d="M270 24H252V30H270V36H246V6H270V24ZM252 18H264V12H252V18Z" fill="var(--icon-strong-base)" />
-      </g>
+      <text
+        x="0"
+        y="34"
+        textLength="270"
+        lengthAdjust="spacingAndGlyphs"
+        font-size="40"
+        font-weight="600"
+        fill="var(--icon-strong-base)"
+        style={{ "font-family": "var(--font-family-sans)" }}
+      >
+        Compy Code
+      </text>
     </svg>
   )
 }

@@ -27,16 +27,19 @@ function createArenaController(directory: string) {
     local.model.list().filter((item) => local.model.visible({ providerID: item.provider.id, modelID: item.id })),
   )
 
-  const sessionID = (side: CompySide) => compy.state[side].sessionID
+  const agent = (side: CompySide) => compy.arena()?.[side]
+  const sessionID = (side: CompySide) => agent(side)?.sessionID
 
   // Both agents start on the model Normal mode uses, so an arena works before anyone picks.
   createEffect(() => {
     const current = local.model.current()
 
-    if (!compy.ready() || !current) return
+    const open = compy.arena()
+
+    if (!open || !current) return
 
     for (const side of COMPY_SIDES)
-      if (!compy.state[side].modelID) compy.setModel(side, { providerID: current.provider.id, modelID: current.id })
+      if (!open[side].modelID) compy.setModel(side, { providerID: current.provider.id, modelID: current.id })
   })
 
   for (const side of COMPY_SIDES)
@@ -55,9 +58,9 @@ function createArenaController(directory: string) {
     models,
     sessionID,
     model(side: CompySide) {
-      const agent = compy.state[side]
+      const chosen = agent(side)
 
-      return local.model.list().find((item) => item.provider.id === agent.providerID && item.id === agent.modelID)
+      return local.model.list().find((item) => item.provider.id === chosen?.providerID && item.id === chosen?.modelID)
     },
     session(side: CompySide) {
       const id = sessionID(side)
@@ -119,13 +122,13 @@ function createArenaController(directory: string) {
   return controller
 }
 
-export function CompyArena(props: { directory: string; projects: () => readonly ArenaProject[] }) {
+export function CompyArena(props: { directory: string; project?: ArenaProject }) {
   const arena = createArenaController(props.directory)
 
   return (
     <div data-slot="compy-arena" class="grid min-h-0 flex-1 gap-2">
       <AgentPanel side="left" arena={arena} />
-      <CompyWorkspace arena={arena} directory={props.directory} projects={props.projects} />
+      <CompyWorkspace arena={arena} directory={props.directory} project={props.project} />
       <AgentPanel side="right" arena={arena} />
     </div>
   )
