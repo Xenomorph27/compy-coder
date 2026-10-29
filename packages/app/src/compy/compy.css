@@ -526,7 +526,8 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--v2-state-fg-danger);
+  /* A solid red that carries white text in both themes; the theme's danger text colour is too pale to fill with. */
+  background: #dc3545;
   transform: scaleX(0);
   transform-origin: right center;
   transition: transform 420ms cubic-bezier(0.65, 0, 0.35, 1);
@@ -540,10 +541,13 @@
   color: #fff;
 }
 
-[data-slot="compy-arena-row"]:has([data-slot="compy-arena-delete"]:is(:hover, :focus-visible))
-  :is([data-slot="compy-arena-progress"], [data-slot="compy-arena-resume"]) {
+[data-slot="compy-arena-row"]:has([data-slot="compy-arena-delete"]:is(:hover, :focus-visible)) [data-slot="compy-arena-progress"] {
   background: rgb(255 255 255 / 0.18);
-  opacity: 1;
+}
+
+/* Deleting, not resuming: the resume hint steps aside while the row is red. */
+[data-slot="compy-arena-row"]:has([data-slot="compy-arena-delete"]:is(:hover, :focus-visible)) [data-slot="compy-arena-resume"] {
+  opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
