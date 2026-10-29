@@ -1,0 +1,440 @@
+/*
+ * Compy arena, styled after the Findress brief: each column has one accent (`--screen`), tints come from one oklab
+ * ladder over that accent, panels are glass over the shell's glow, spacing does the work of dividers, and numbers are
+ * mono. The colours fall back to the Compy palette so the arena keeps its identity under any theme.
+ */
+[data-component="compy"] {
+  --compy-a: var(--compy-teal, #2ee6c5);
+  --compy-b: var(--compy-violet, #a78bfa);
+  --compy-c: var(--compy-cyan, #38bdf8);
+}
+
+[data-slot="compy-arena"] {
+  grid-template-columns: minmax(280px, 1fr) minmax(380px, 1.35fr) minmax(280px, 1fr);
+}
+
+[data-slot="compy-panel"] {
+  --screen: var(--compy-c);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  padding: 16px;
+  overflow: hidden;
+  border-radius: 14px;
+  background-color: color-mix(in oklab, var(--v2-background-bg-base) 84%, transparent);
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--screen) 5%, transparent),
+    transparent 160px
+  );
+  box-shadow: var(--v2-elevation-raised);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+
+[data-slot="compy-panel"][data-side="left"] {
+  --screen: var(--compy-a);
+}
+
+[data-slot="compy-panel"][data-side="right"] {
+  --screen: var(--compy-b);
+}
+
+/* A luminous hairline along the top edge, in the column's accent. */
+[data-slot="compy-panel"]::before {
+  content: "";
+  position: absolute;
+  inset: 0 16px auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--screen), transparent);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+[data-slot="compy-title"] {
+  font-size: 16px;
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-base);
+  letter-spacing: -0.015em;
+  color: var(--v2-text-text-base);
+}
+
+[data-slot="compy-eyebrow"] {
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-compact);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--v2-text-text-muted);
+}
+
+[data-slot="compy-agent-header"] {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+[data-slot="compy-agent-mark"] {
+  display: inline-block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--screen);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--screen) 70%, transparent);
+}
+
+[data-slot="compy-plan"][data-side="left"] {
+  --screen: var(--compy-a);
+}
+
+[data-slot="compy-plan"][data-side="right"] {
+  --screen: var(--compy-b);
+}
+
+[data-slot="compy-agent-status"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: var(--line-height-compact);
+  color: var(--v2-text-text-muted);
+  background-image: linear-gradient(
+    color-mix(in oklab, var(--screen) 9%, transparent),
+    color-mix(in oklab, var(--screen) 9%, transparent)
+  );
+}
+
+[data-slot="compy-agent-status"][data-state="running"] {
+  color: var(--v2-text-text-base);
+  background-image: linear-gradient(
+    color-mix(in oklab, var(--screen) 21%, transparent),
+    color-mix(in oklab, var(--screen) 21%, transparent)
+  );
+}
+
+[data-slot="compy-transcript"] {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-inline: -4px;
+  padding-inline: 4px;
+  font-size: 13px;
+  line-height: var(--line-height-compact);
+}
+
+[data-slot="compy-empty"] {
+  margin: auto 0;
+  padding: 24px 8px;
+  text-align: center;
+  font-size: 13px;
+  line-height: var(--line-height-compact);
+  color: var(--v2-text-text-muted);
+}
+
+[data-slot="compy-user"] {
+  align-self: flex-end;
+  max-width: 92%;
+  max-height: 160px;
+  overflow: hidden;
+  padding: 8px 12px;
+  border-radius: 12px 12px 4px 12px;
+  white-space: pre-wrap;
+  color: var(--v2-text-text-base);
+  background-image: linear-gradient(
+    color-mix(in oklab, var(--screen) 11%, transparent),
+    color-mix(in oklab, var(--screen) 11%, transparent)
+  );
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 24px), transparent);
+  mask-image: linear-gradient(to bottom, black calc(100% - 24px), transparent);
+}
+
+[data-slot="compy-tool"] {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--v2-text-text-muted);
+  background: var(--v2-background-bg-layer-01);
+}
+
+[data-slot="compy-tool"] code {
+  font-family: var(--font-family-mono);
+  color: var(--v2-text-text-base);
+}
+
+[data-slot="compy-tool"][data-status="error"] code {
+  color: var(--v2-state-fg-danger);
+}
+
+[data-slot="compy-error"] {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: var(--line-height-compact);
+  color: var(--v2-text-text-base);
+  background: color-mix(in oklab, var(--v2-state-fg-danger) 12%, transparent);
+}
+
+[data-slot="compy-error"] [data-component="icon"] {
+  flex: none;
+  color: var(--v2-state-fg-danger);
+}
+
+[data-slot="compy-subagents"],
+[data-slot="compy-context"] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: none;
+}
+
+[data-slot="compy-count"] {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  font-family: var(--font-family-mono);
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+  color: var(--v2-text-text-base);
+  background-image: linear-gradient(
+    color-mix(in oklab, var(--screen) 21%, transparent),
+    color-mix(in oklab, var(--screen) 21%, transparent)
+  );
+}
+
+[data-slot="compy-subagent"] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  padding: 0 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: var(--line-height-compact);
+  color: var(--v2-text-text-muted);
+}
+
+[data-slot="compy-subagent"]:hover {
+  background-image: linear-gradient(
+    color-mix(in oklab, var(--screen) 11%, transparent),
+    color-mix(in oklab, var(--screen) 11%, transparent)
+  );
+}
+
+[data-slot="compy-subagent-dot"] {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-inline: 4px;
+  border-radius: 999px;
+  background: var(--v2-text-text-muted);
+}
+
+/* Context meter: one segmented bar and a horizontal legend, after the Claude Code context panel. */
+[data-slot="compy-context"] {
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--v2-background-bg-layer-01);
+  box-shadow: inset 0 1px 0 0 var(--compy-hairline, rgb(255 255 255 / 0.06));
+}
+
+[data-slot="compy-context-bar"] {
+  display: flex;
+  gap: 2px;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--v2-background-bg-layer-02);
+}
+
+[data-slot="compy-context-segment"],
+[data-slot="compy-context-swatch"] {
+  border-radius: 999px;
+}
+
+[data-slot="compy-context-segment"][data-key="free"],
+[data-slot="compy-context-swatch"][data-key="free"] {
+  background: var(--v2-background-bg-layer-03);
+}
+
+[data-key="base"]:is([data-slot="compy-context-segment"], [data-slot="compy-context-swatch"]) {
+  background: var(--compy-b);
+}
+
+[data-key="conversation"]:is([data-slot="compy-context-segment"], [data-slot="compy-context-swatch"]) {
+  background: var(--compy-c);
+}
+
+[data-key="reply"]:is([data-slot="compy-context-segment"], [data-slot="compy-context-swatch"]) {
+  background: var(--compy-a);
+}
+
+[data-slot="compy-context-legend"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-size: 12px;
+  line-height: var(--line-height-compact);
+  color: var(--v2-text-text-muted);
+}
+
+[data-slot="compy-context-legend"] li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+[data-slot="compy-context-swatch"] {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+/* The debate ribbon: milestones on a thin luminous line, like the Findress timeline. */
+[data-slot="compy-ribbon"] {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding-top: 4px;
+}
+
+[data-slot="compy-ribbon"]::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  inset-inline: 16.6%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--compy-a), var(--compy-c) 50%, var(--compy-b));
+  opacity: 0.45;
+}
+
+[data-slot="compy-ribbon"] li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  line-height: var(--line-height-compact);
+  color: var(--v2-text-text-muted);
+}
+
+[data-slot="compy-ribbon-dot"] {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  border: 1px solid var(--v2-border-border-base);
+  background: var(--v2-background-bg-base);
+}
+
+[data-slot="compy-ribbon"] li[data-state="done"],
+[data-slot="compy-ribbon"] li[data-state="running"],
+[data-slot="compy-ribbon"] li[data-state="next"] {
+  color: var(--v2-text-text-base);
+}
+
+[data-slot="compy-ribbon"] li[data-state="done"] [data-slot="compy-ribbon-dot"] {
+  border-color: transparent;
+  background: var(--compy-c);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--compy-c) 60%, transparent);
+}
+
+[data-slot="compy-ribbon"] li[data-state="running"] [data-slot="compy-ribbon-dot"] {
+  border-color: var(--compy-c);
+  background: color-mix(in oklab, var(--compy-c) 40%, var(--v2-background-bg-base));
+  animation: compy-pulse 1.6s ease-in-out infinite;
+}
+
+[data-slot="compy-ribbon"] li[data-state="next"] [data-slot="compy-ribbon-dot"] {
+  border-color: var(--compy-c);
+}
+
+@keyframes compy-pulse {
+  50% {
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--compy-c) 25%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-slot="compy-ribbon"] li[data-state="running"] [data-slot="compy-ribbon-dot"] {
+    animation: none;
+  }
+}
+
+[data-slot="compy-topic"] {
+  width: 100%;
+  min-height: 96px;
+  padding: 10px 12px;
+  resize: vertical;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: var(--line-height-base);
+  color: var(--v2-text-text-base);
+  background: var(--v2-background-bg-layer-01);
+  box-shadow: inset 0 0 0 1px var(--v2-border-border-muted);
+  outline: none;
+}
+
+[data-slot="compy-topic"]:focus-visible {
+  box-shadow:
+    inset 0 0 0 1px var(--compy-c),
+    0 0 0 3px color-mix(in oklab, var(--compy-c) 22%, transparent);
+}
+
+[data-slot="compy-topic"]:disabled {
+  color: var(--v2-text-text-muted);
+}
+
+/* The primary action carries the aurora, the one place it appears at full strength. */
+[data-slot="compy-advance"]:not(:disabled) {
+  color: #04121a;
+  background-image: linear-gradient(90deg, var(--compy-a), var(--compy-c) 50%, var(--compy-b));
+}
+
+/* The light theme's deepened aurora needs light text to keep its contrast. */
+:root[data-color-scheme="light"] [data-slot="compy-advance"]:not(:disabled) {
+  color: #ffffff;
+}
+
+[data-slot="compy-plan"] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: var(--line-height-compact);
+  background: var(--v2-background-bg-layer-01);
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--screen) 5%, transparent),
+    transparent 96px
+  );
+}
+
+[data-slot="compy-plan"] h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-compact);
+  color: var(--v2-text-text-base);
+}

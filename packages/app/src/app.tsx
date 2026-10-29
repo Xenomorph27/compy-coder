@@ -60,6 +60,7 @@ export function AppBaseProviders(
       <Title>Compy Code</Title>
       <Font />
       <ThemeProvider
+        defaultTheme="compy"
         onThemeApplied={(_, mode, scheme) => {
           props.onThemeApplied?.(mode, scheme)
         }}
