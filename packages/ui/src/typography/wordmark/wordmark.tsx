@@ -1,73 +1,56 @@
 import { createUniqueId, type ComponentProps } from "solid-js"
 
+/** The product name, set in the UI font. Fixed to its box with `textLength`, so it scales like the old drawn mark. */
+const NAME = "Compy Code"
+
 export function Wordmark(
   props: Pick<ComponentProps<"svg">, "class"> & { fade?: boolean; muted?: boolean; outline?: boolean },
 ) {
   const mask = createUniqueId()
   const maskGradient = createUniqueId()
+  const aurora = createUniqueId()
 
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 831 129"
+      viewBox="0 0 720 129"
       fill="none"
       classList={{
         [props.class ?? ""]: !!props.class,
-        "overflow-visible [&_path]:[vector-effect:non-scaling-stroke]": props.outline,
+        "overflow-visible [&_text]:[vector-effect:non-scaling-stroke]": props.outline,
       }}
     >
       <g opacity={props.muted === false ? 1 : 0.6} class="[[data-color-scheme=dark]_&]:opacity-100">
         <g mask={props.fade === false ? undefined : `url(#${mask})`}>
-          <g
+          <text
+            x="0"
+            y="104"
+            textLength="720"
+            lengthAdjust="spacingAndGlyphs"
+            font-size="124"
+            font-weight="600"
+            letter-spacing="-4"
+            style={{ "font-family": "var(--font-family-sans)" }}
             opacity={props.muted === false ? 1 : 0.16 * 0.7}
-            fill={props.outline ? "none" : "currentColor"}
+            fill={props.outline ? "none" : props.muted === false ? `url(#${aurora})` : "currentColor"}
             stroke={props.outline ? "currentColor" : undefined}
             stroke-width={props.outline ? 1 : undefined}
           >
-            <path
-              pathLength={props.outline ? 1 : undefined}
-              d="M73.8462 36.4286H18.4615V91.7143H73.8462V110.143H0V18H73.8462V36.4286Z"
-            />
-            <path
-              pathLength={props.outline ? 1 : undefined}
-              d="M147.692 36.4286H110.769V91.7143H147.692V36.4286ZM166.154 110.143H92.3077V18H166.154V110.143Z"
-            />
-            <path
-              pathLength={props.outline ? 1 : undefined}
-              d="M184.615 18H276.923V110.143H258.462V36.4286H240V110.143H221.538V36.4286H203.077V110.143H184.615V18Z"
-            />
-            <path
-              pathLength={props.outline ? 1 : undefined}
-              d="M313.846 91.7143H350.769V36.4286H313.846V91.7143ZM369.231 110.143H313.846V128.571H295.385V18H369.231V110.143Z"
-            />
-            <path
-              pathLength={props.outline ? 1 : undefined}
-              d="M387.692 18H406.154V73.2857H443.077V18H461.538V128.571H387.692V110.143H443.077V91.7143H387.692V18Z"
-            />
-            <path
-              pathLength={props.outline ? 1 : undefined}
-              d="M553.846 36.4286H498.462V91.7143H553.846V110.143H480V18H553.846V36.4286Z"
-            />
-            <path
-              pathLength={props.outline ? 1 : undefined}
-              d="M627.692 36.4286H590.769V91.7143H627.692V36.4286ZM646.154 110.143H572.308V18H646.154V110.143Z"
-            />
-            <path
-              pathLength={props.outline ? 1 : undefined}
-              d="M720 36.4286H683.077V91.7143H720V36.4286ZM738.462 110.143H664.615V18H720V0H738.462V110.143Z"
-            />
-            <path
-              pathLength={props.outline ? 1 : undefined}
-              d="M830.769 73.2857H775.385V91.7143H830.769V110.143H756.923V18H830.769V73.2857ZM775.385 54.8571H812.308V36.4286H775.385V54.8571Z"
-            />
-          </g>
+            {NAME}
+          </text>
         </g>
       </g>
       <defs>
-        <mask id={mask} style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="831" height="129">
-          <rect width="831" height="129" fill={`url(#${maskGradient})`} />
+        <linearGradient id={aurora} x1="0" y1="0" x2="720" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0.3" stop-color="currentColor" />
+          <stop offset="0.6" stop-color="#2ee6c5" />
+          <stop offset="0.8" stop-color="#38bdf8" />
+          <stop offset="1" stop-color="#a78bfa" />
+        </linearGradient>
+        <mask id={mask} style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="720" height="129">
+          <rect width="720" height="129" fill={`url(#${maskGradient})`} />
         </mask>
-        <linearGradient id={maskGradient} x1="415.5" y1="68" x2="415.5" y2="129" gradientUnits="userSpaceOnUse">
+        <linearGradient id={maskGradient} x1="360" y1="68" x2="360" y2="129" gradientUnits="userSpaceOnUse">
           <stop stop-color="white" stop-opacity="0.7" />
           <stop offset="1" stop-color="white" stop-opacity="0" />
         </linearGradient>

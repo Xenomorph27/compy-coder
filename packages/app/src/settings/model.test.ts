@@ -198,20 +198,20 @@ describe("settings schema", () => {
   })
 })
 
-test("font defaults are Inter and IBM Plex Mono", () => {
-  expect(sansDefault).toBe("Inter")
-  expect(monoDefault).toBe("IBM Plex Mono")
+test("font defaults are Geist and Geist Mono", () => {
+  expect(sansDefault).toBe("Geist")
+  expect(monoDefault).toBe("Geist Mono")
 })
 
 test.each([
-  { name: "sans", family: sansFontFamily, font: undefined, prefix: '"Inter", ' },
-  { name: "sans", family: sansFontFamily, font: "", prefix: '"Inter", ' },
-  { name: "sans", family: sansFontFamily, font: "   ", prefix: '"Inter", ' },
-  { name: "sans", family: sansFontFamily, font: "Custom Sans", prefix: '"Custom Sans", "Inter", ' },
-  { name: "mono", family: monoFontFamily, font: undefined, prefix: '"IBM Plex Mono", ' },
-  { name: "mono", family: monoFontFamily, font: "", prefix: '"IBM Plex Mono", ' },
-  { name: "mono", family: monoFontFamily, font: "   ", prefix: '"IBM Plex Mono", ' },
-  { name: "mono", family: monoFontFamily, font: "Custom Mono", prefix: '"Custom Mono", "IBM Plex Mono", ' },
+  { name: "sans", family: sansFontFamily, font: undefined, prefix: '"Geist", ' },
+  { name: "sans", family: sansFontFamily, font: "", prefix: '"Geist", ' },
+  { name: "sans", family: sansFontFamily, font: "   ", prefix: '"Geist", ' },
+  { name: "sans", family: sansFontFamily, font: "Custom Sans", prefix: '"Custom Sans", "Geist", ' },
+  { name: "mono", family: monoFontFamily, font: undefined, prefix: '"Geist Mono", ' },
+  { name: "mono", family: monoFontFamily, font: "", prefix: '"Geist Mono", ' },
+  { name: "mono", family: monoFontFamily, font: "   ", prefix: '"Geist Mono", ' },
+  { name: "mono", family: monoFontFamily, font: "Custom Mono", prefix: '"Custom Mono", "Geist Mono", ' },
   { name: "terminal", family: terminalFontFamily, font: undefined, prefix: '"JetBrainsMono Nerd Font Mono", ' },
 ])("$name font family for $font starts with $prefix", ({ family, font, prefix }) => {
   expect(family(font)).toStartWith(prefix)
