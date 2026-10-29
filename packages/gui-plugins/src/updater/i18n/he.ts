@@ -4,10 +4,10 @@ export default {
   "action.checking": "בודק…",
   "action.downloading": "מוריד…",
   "action.installRestart": "התקן והפעל מחדש",
-  "action.download": "הורדת OpenCode",
+  "action.download": "הורדת Compy Code",
   "action.installing": "מתקין…",
   "toast.latest.title": "אתה מעודכן",
-  "toast.latest.description": "אתה מפעיל את הגרסה האחרונה של OpenCode.",
+  "toast.latest.description": "אתה מפעיל את הגרסה האחרונה של Compy Code.",
   "migration.title": "מעבר מבטא לגרסה יציבה",
   "migration.description":
     "בשלב זה OpenCode Beta עובר ל-OpenCode Stable. יש להוריד את גרסה ⁨{{version}}⁩ ולאחר מכן להתקין את OpenCode מתמונת הדיסק כדי להמשיך לקבל עדכונים.",

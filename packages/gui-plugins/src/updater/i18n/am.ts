@@ -4,10 +4,10 @@ export default {
   "action.checking": "በማጣራት ላይ…",
   "action.downloading": "በማውረድ ላይ…",
   "action.installRestart": "ጫን እና እንደገና አስጀምር",
-  "action.download": "OpenCodeን አውርድ",
+  "action.download": "Compy Codeን አውርድ",
   "action.installing": "በመጫን ላይ…",
   "toast.latest.title": "ዘመኑን ጠብቀዋል",
-  "toast.latest.description": "የቅርብ ጊዜውን የOpenCode እትም እያሄዱ ነው።",
+  "toast.latest.description": "የቅርብ ጊዜውን የCompy Code እትም እያሄዱ ነው።",
   "migration.title": "ከBeta ወደ Stable ይዛወሩ",
   "migration.description":
     "ለጊዜው OpenCode Beta ወደ OpenCode Stable እየተዛወረ ነው። ዝማኔዎችን መቀበልዎን ለመቀጠል ስሪት {{version}}ን ያውርዱ፣ ከዚያ OpenCodeን ከዲስክ ምስሉ ይጫኑ።",

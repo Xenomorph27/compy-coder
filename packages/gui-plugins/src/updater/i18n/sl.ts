@@ -4,10 +4,10 @@ export default {
   "action.checking": "Preverjanje …",
   "action.downloading": "Prenašanje …",
   "action.installRestart": "Namestite in znova zaženite",
-  "action.download": "Prenesi OpenCode",
+  "action.download": "Prenesi Compy Code",
   "action.installing": "Namestitev …",
   "toast.latest.title": "Ste na tekočem",
-  "toast.latest.description": "Uporabljate najnovejšo različico OpenCode.",
+  "toast.latest.description": "Uporabljate najnovejšo različico Compy Code.",
   "migration.title": "Prehod z Beta na Stable",
   "migration.description":
     "OpenCode Beta se za zdaj seli na OpenCode Stable. Prenesite različico {{version}}, nato pa namestite OpenCode iz slike diska, da boste še naprej prejemali posodobitve.",

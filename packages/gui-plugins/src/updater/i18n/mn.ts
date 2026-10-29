@@ -4,10 +4,10 @@ export default {
   "action.checking": "Шалгаж байна…",
   "action.downloading": "Татаж авч байна…",
   "action.installRestart": "Суулгаад дахин эхлүүлнэ үү",
-  "action.download": "OpenCode татах",
+  "action.download": "Compy Code татах",
   "action.installing": "Суулгаж байна…",
   "toast.latest.title": "Та шинэчлэгдсэн байна",
-  "toast.latest.description": "Та OpenCode-н хамгийн сүүлийн хувилбарыг ажиллуулж байна.",
+  "toast.latest.description": "Та Compy Code-н хамгийн сүүлийн хувилбарыг ажиллуулж байна.",
   "migration.title": "Beta хувилбараас Stable хувилбар руу шилжих",
   "migration.description":
     "Одоогоор OpenCode Beta нь OpenCode Stable руу шилжиж байна. Шинэчлэлтүүдийг үргэлжлүүлэн авахын тулд {{version}} хувилбарыг татаж аваад OpenCode-ийг дискний дүрсээс суулгана уу.",

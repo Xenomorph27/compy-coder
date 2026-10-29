@@ -4,7 +4,7 @@ export default {
   "action.checking": "Tarkistetaan…",
   "action.downloading": "Ladataan…",
   "action.installRestart": "Asenna ja käynnistä uudelleen",
-  "action.download": "Lataa OpenCode",
+  "action.download": "Lataa Compy Code",
   "action.installing": "Asennetaan…",
   "toast.latest.title": "Olet ajan tasalla",
   "toast.latest.description": "Käytät OpenCoden uusinta versiota.",

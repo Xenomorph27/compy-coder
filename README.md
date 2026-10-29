@@ -1,3 +1,26 @@
+# Compy Code
+
+Compy Code is an AI coding IDE built on [OpenCode](https://github.com/anomalyco/opencode), the open source coding agent (MIT).
+It keeps everything OpenCode's agent and desktop app do, and adds a **competition mode** (in progress): pick two models,
+give them a topic, and they propose plans independently, critique each other, and converge on the best plan before building it.
+
+## Run the IDE from source
+
+Requires [Bun](https://bun.sh) 1.4.4 and Git with long paths and symlinks enabled on Windows
+(`git config core.longpaths true` and `git config core.symlinks true` before checkout).
+
+```bash
+bun install
+bun run dev:desktop
+```
+
+The desktop app starts its agent server by spawning `bun`, so `bun.exe` itself must be on `PATH`
+(a native Bun install does this; the npm `bun` package only adds a `bun.cmd` shim).
+
+---
+
+_The rest of this README is OpenCode's upstream documentation._
+
 <p align="center">
   <a href="https://opencode.ai">
     <picture>

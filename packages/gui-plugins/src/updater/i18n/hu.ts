@@ -4,10 +4,10 @@ export default {
   "action.checking": "Ellenőrzés…",
   "action.downloading": "Letöltés…",
   "action.installRestart": "Telepítse és indítsa újra",
-  "action.download": "OpenCode letöltése",
+  "action.download": "Compy Code letöltése",
   "action.installing": "Telepítés…",
   "toast.latest.title": "Ön naprakész",
-  "toast.latest.description": "Ön a OpenCode legújabb verzióját futtatja.",
+  "toast.latest.description": "Ön a Compy Code legújabb verzióját futtatja.",
   "migration.title": "Váltás a Bétáról a Stabil verzióra",
   "migration.description":
     "Az OpenCode Beta egyelőre átkerül az OpenCode Stable verzióba. Töltse le a(z) {{version}} verziót, majd telepítse az OpenCode-ot a lemezképből a frissítések további fogadásához.",

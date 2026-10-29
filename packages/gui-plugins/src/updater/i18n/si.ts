@@ -4,10 +4,10 @@ export default {
   "action.checking": "පරීක්ෂා කරමින්…",
   "action.downloading": "බාගනිමින්…",
   "action.installRestart": "ස්ථාපනය කර නැවත ආරම්භ කරන්න",
-  "action.download": "OpenCode බාගන්න",
+  "action.download": "Compy Code බාගන්න",
   "action.installing": "ස්ථාපනය කරමින්…",
   "toast.latest.title": "ඔබ යාවත්කාලීනයි",
-  "toast.latest.description": "ඔබ OpenCode හි නවතම අනුවාදය ධාවනය කරයි.",
+  "toast.latest.description": "ඔබ Compy Code හි නවතම අනුවාදය ධාවනය කරයි.",
   "migration.title": "බීටා වෙතින් ස්ථාවර අනුවාදයට මාරු වන්න",
   "migration.description":
     "දැනට OpenCode Beta, OpenCode Stable වෙත මාරු වෙමින් පවතී. {{version}} අනුවාදය බාගත කර, යාවත්කාලීන දිගටම ලැබීමට තැටි රූපයෙන් OpenCode ස්ථාපනය කරන්න.",

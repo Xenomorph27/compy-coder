@@ -4,10 +4,10 @@ export default {
   "action.checking": "កំពុងពិនិត្យ…",
   "action.downloading": "កំពុងទាញយក…",
   "action.installRestart": "ដំឡើង និងចាប់ផ្តើមឡើងវិញ",
-  "action.download": "ទាញយក OpenCode",
+  "action.download": "ទាញយក Compy Code",
   "action.installing": "កំពុងដំឡើង…",
   "toast.latest.title": "អ្នកទាន់សម័យហើយ។",
-  "toast.latest.description": "អ្នកកំពុងដំណើរការកំណែចុងក្រោយបំផុតនៃ OpenCode ។",
+  "toast.latest.description": "អ្នកកំពុងដំណើរការកំណែចុងក្រោយបំផុតនៃ Compy Code ។",
   "migration.title": "ផ្លាស់ប្តូរពី Beta ទៅ Stable",
   "migration.description":
     "សម្រាប់ពេលនេះ OpenCode Beta កំពុងផ្លាស់ប្តូរទៅ OpenCode Stable។ ទាញយកកំណែ {{version}} បន្ទាប់មកដំឡើង OpenCode ពីរូបភាពថាស ដើម្បីបន្តទទួលបានបច្ចុប្បន្នភាព។",

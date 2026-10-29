@@ -4,10 +4,10 @@ export default {
   "action.checking": "Проверка…",
   "action.downloading": "Изтегля се…",
   "action.installRestart": "Инсталирайте и рестартирайте",
-  "action.download": "Изтегляне на OpenCode",
+  "action.download": "Изтегляне на Compy Code",
   "action.installing": "Инсталира се…",
   "toast.latest.title": "Вие сте в крак с времето",
-  "toast.latest.description": "Вие използвате най-новата версия на OpenCode.",
+  "toast.latest.description": "Вие използвате най-новата версия на Compy Code.",
   "migration.title": "Преминаване от Beta към Stable",
   "migration.description":
     "Засега OpenCode Beta преминава към OpenCode Stable. Изтеглете версия {{version}}, след което инсталирайте OpenCode от дисковия образ, за да продължите да получавате актуализации.",

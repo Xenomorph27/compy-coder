@@ -4,10 +4,10 @@ export default {
   "action.checking": "檢查中…",
   "action.downloading": "下載中…",
   "action.installRestart": "安裝並重新啟動",
-  "action.download": "下載 OpenCode",
+  "action.download": "下載 Compy Code",
   "action.installing": "安裝中…",
   "toast.latest.title": "已是最新版本",
-  "toast.latest.description": "你正在使用最新版本的 OpenCode。",
+  "toast.latest.description": "你正在使用最新版本的 Compy Code。",
   "migration.title": "從 Beta 版移轉至穩定版",
   "migration.description":
     "OpenCode Beta 目前正在移轉至 OpenCode 穩定版。請下載 {{version}} 版本，然後從磁碟映像檔安裝 OpenCode，以繼續接收更新。",

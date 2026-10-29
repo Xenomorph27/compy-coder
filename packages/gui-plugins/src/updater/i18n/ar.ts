@@ -4,10 +4,10 @@ export default {
   "action.checking": "جارٍ التحقق…",
   "action.downloading": "جارٍ التنزيل…",
   "action.installRestart": "تثبيت وإعادة تشغيل",
-  "action.download": "تنزيل OpenCode",
+  "action.download": "تنزيل Compy Code",
   "action.installing": "جارٍ التثبيت…",
   "toast.latest.title": "لديك أحدث إصدار",
-  "toast.latest.description": "أنت تستخدم أحدث إصدار من OpenCode.",
+  "toast.latest.description": "أنت تستخدم أحدث إصدار من Compy Code.",
   "migration.title": "الانتقال من الإصدار التجريبي إلى المستقر",
   "migration.description":
     "ينتقل OpenCode Beta حاليًا إلى OpenCode Stable. نزّل الإصدار ⁨{{version}}⁩، ثم ثبّت OpenCode من صورة القرص للاستمرار في تلقي التحديثات.",

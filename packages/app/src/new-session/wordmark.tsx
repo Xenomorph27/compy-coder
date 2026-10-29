@@ -4,66 +4,73 @@ import { For, onCleanup, onMount, Show } from "solid-js"
 import { PinSound } from "./pin-sound"
 import "./wordmark.css"
 
-// Each letter in the 234×42 logo viewBox, with its counter shadow, stem, and bottom-centre pivot.
+// Each letter in the 270×42 logo viewBox, with its counter shadow, stem, and bottom-centre pivot.
 const LETTERS = [
   {
     cx: 12,
-    weak: "M18 30H6V18H18V30Z",
+    weak: "M24 30H6V18H24V30Z",
     fill: "var(--icon-base)",
-    stem: "M18 12H6V30H18V12ZM24 36H0V6H24V36Z",
+    stem: "M24 12H6V30H24V36H0V6H24V12Z",
   },
   {
     cx: 42,
     weak: "M48 30H36V18H48V30Z",
     fill: "var(--icon-base)",
-    stem: "M36 30H48V12H36V30ZM54 36H36V42H30V6H54V36Z",
+    stem: "M48 12H36V30H48V12ZM54 36H30V6H54V36Z",
   },
   {
-    cx: 72,
-    weak: "M84 24V30H66V24H84Z",
+    cx: 75,
+    weak: "M72 36H66V18H72V36ZM84 36H78V18H84V36Z",
     fill: "var(--icon-base)",
-    stem: "M84 24H66V30H84V36H60V6H84V24ZM66 18H78V12H66V18Z",
+    stem: "M60 6H90V36H84V12H78V36H72V12H66V36H60V6Z",
   },
   {
-    cx: 102,
-    weak: "M108 36H96V18H108V36Z",
+    cx: 108,
+    weak: "M114 30H102V18H114V30Z",
     fill: "var(--icon-base)",
-    stem: "M108 12H96V36H90V6H108V12ZM114 36H108V12H114V36Z",
+    stem: "M102 30H114V12H102V30ZM120 36H102V42H96V6H120V36Z",
   },
   {
-    cx: 132,
-    weak: "M144 30H126V18H144V30Z",
-    fill: "var(--icon-strong-base)",
-    stem: "M144 12H126V30H144V36H120V6H144V12Z",
+    cx: 138,
+    weak: "M144 24H132V12H144V24Z",
+    fill: "var(--icon-base)",
+    stem: "M126 6H132V24H144V6H150V42H126V36H144V30H126V6Z",
   },
   {
-    cx: 162,
-    weak: "M168 30H156V18H168V30Z",
+    cx: 168,
+    weak: "M180 30H162V18H180V30Z",
     fill: "var(--icon-strong-base)",
-    stem: "M168 12H156V30H168V12ZM174 36H150V6H174V36Z",
+    stem: "M180 12H162V30H180V36H156V6H180V12Z",
   },
   {
-    cx: 192,
-    weak: "M198 30H186V18H198V30Z",
+    cx: 198,
+    weak: "M204 30H192V18H204V30Z",
     fill: "var(--icon-strong-base)",
-    stem: "M198 12H186V30H198V12ZM204 36H180V6H198V0H204V36Z",
+    stem: "M204 12H192V30H204V12ZM210 36H186V6H210V36Z",
   },
   {
-    cx: 222,
-    weak: "M234 24V30H216V24H234Z",
+    cx: 228,
+    weak: "M234 30H222V18H234V30Z",
     fill: "var(--icon-strong-base)",
-    stem: "M216 12V18H228V12H216ZM234 24H216V30H234V36H210V6H234V24Z",
+    stem: "M234 12H222V30H234V12ZM240 36H216V6H234V0H240V36Z",
+  },
+  {
+    cx: 258,
+    weak: "M270 24V30H252V24H270Z",
+    fill: "var(--icon-strong-base)",
+    stem: "M270 24H252V30H270V36H246V6H270V24ZM252 18H264V12H252V18Z",
   },
 ] as const
 
-// Lodger geometry, in the logo's 234×42 viewBox units. The lodger is drawn from its bottom centre.
-const W = 234
+// Lodger geometry, in the logo's 270×42 viewBox units. The lodger is drawn from its bottom centre.
+const W = 270
+const LAST = LETTERS.length - 1
 const H = 42
-const HOLE = { x: 222, y: 15 }
-const REST = { x: 222, y: 21 }
-const PIN_SLOT = { x: 226.5, y: 10.5 }
+const HOLE = { x: 258, y: 15 }
+const REST = { x: 258, y: 21 }
+const PIN_SLOT = { x: 262.5, y: 10.5 }
 const GROUND = 36
-const HOME = 246
+const HOME = 282
 const POP = 26
 const SLIP = 60
 const HOLE_MAGNET = 24
@@ -137,7 +144,7 @@ export function NewSessionWordmark(props: {
           props.ref(el)
         }}
         data-slot="wordmark-box"
-        class="relative mx-auto aspect-[234/42] w-4/5"
+        class="relative mx-auto aspect-[270/42] w-4/5"
       >
         <Show when={lodger}>
           <WordmarkLodger
@@ -196,7 +203,7 @@ function WordmarkLodger(props: {
   return (
     <div ref={stage} class="absolute">
       <div ref={flat} data-slot="wordmark-flat" class="absolute inset-0">
-        <svg viewBox="0 0 234 42" fill="none" class="block size-full overflow-visible">
+        <svg viewBox="0 0 270 42" fill="none" class="block size-full overflow-visible">
           <For each={LETTERS}>
             {(item, i) => (
               <g ref={(el) => (letters[i()] = el)}>
@@ -204,10 +211,10 @@ function WordmarkLodger(props: {
                   <path d={item.weak} fill="var(--icon-weak-base)" />
                   <path d={item.stem} fill={item.fill} />
                 </g>
-                <Show when={i() === 7}>
+                <Show when={i() === LAST}>
                   <rect
                     ref={notch}
-                    x="224.6"
+                    x="260.6"
                     y="8.6"
                     width="3.8"
                     height="3.8"
@@ -224,7 +231,7 @@ function WordmarkLodger(props: {
       <svg
         ref={svg}
         data-slot="wordmark-lodger"
-        viewBox="0 0 234 42"
+        viewBox="0 0 270 42"
         class="absolute inset-0 size-full overflow-visible"
       >
         <line ref={neck} stroke="var(--lodger-body)" stroke-linecap="round" style={{ opacity: 0 }} />
@@ -334,12 +341,12 @@ function mountLodger(
     const l = parts.box.getBoundingClientRect()
     if (!l.width) return
     const s = parts.box.closest('[data-component="new-session"]')?.getBoundingClientRect()
-    const pitch = Math.max(3, Math.round(l.width / 78))
-    const x = s ? Math.round(l.left - s.left + (l.width - pitch * 78) / 2) - (l.left - s.left) : (l.width - pitch * 78) / 2
+    const pitch = Math.max(3, Math.round(l.width / 90))
+    const x = s ? Math.round(l.left - s.left + (l.width - pitch * 90) / 2) - (l.left - s.left) : (l.width - pitch * 90) / 2
     const y = s ? Math.round(l.top - s.top + (l.height - pitch * 14) / 2) - (l.top - s.top) : (l.height - pitch * 14) / 2
     parts.stage.style.left = `${x}px`
     parts.stage.style.top = `${y}px`
-    parts.stage.style.width = `${pitch * 78}px`
+    parts.stage.style.width = `${pitch * 90}px`
     parts.stage.style.height = `${pitch * 14}px`
     measure()
   }
@@ -351,7 +358,7 @@ function mountLodger(
       return
     }
     parts.grip.style.display = ""
-    const box = where === "hidden" ? { x: 213, y: 8, w: 18, h: 14 } : { x: 234, y: 18, w: 24, h: 24 }
+    const box = where === "hidden" ? { x: 249, y: 8, w: 18, h: 14 } : { x: 270, y: 18, w: 24, h: 24 }
     parts.grip.style.left = `${(box.x / W) * 100}%`
     parts.grip.style.top = `${(box.y / H) * 100}%`
     parts.grip.style.width = `${(box.w / W) * 100}%`
@@ -409,10 +416,10 @@ function mountLodger(
     c.pinY = lerp(PIN_SLOT.y, c.y - 11, clamp01(out / 7))
     c.pinRot = (c.x - REST.x) * 2.5
     c.pinScale = 1 + stress * 0.35
-    poses[7].x = (c.x - REST.x) * 0.12
-    poses[7].y = (c.y - REST.y) * 0.12
-    poses[7].sx = 1 + stress * 0.05
-    poses[7].sy = 1 + stress * 0.05
+    poses[LAST].x = (c.x - REST.x) * 0.12
+    poses[LAST].y = (c.y - REST.y) * 0.12
+    poses[LAST].sx = 1 + stress * 0.05
+    poses[LAST].sy = 1 + stress * 0.05
   }
 
   const snapIn = (dt: number) => {
@@ -437,7 +444,7 @@ function mountLodger(
     }
     if (out > 0.05 || Math.hypot(c.vx, c.vy) > 0.5) return
     restHidden()
-    if (sound()) PinSound.slot(70, 78, c.x, W)
+    if (sound()) PinSound.slot(82, 90, c.x, W)
     blinkOnce()
   }
 
@@ -494,7 +501,7 @@ function mountLodger(
     {
       at: 1.35,
       run: () => {
-        if (sound()) PinSound.slot(75, 78, PIN_SLOT.x, W)
+        if (sound()) PinSound.slot(87, 90, PIN_SLOT.x, W)
       },
     },
     { at: 1.72, run: () => land(0.32) },
@@ -511,7 +518,7 @@ function mountLodger(
     c.pinOpacity = t < 1.35 ? 1 : 0
 
     poses.forEach((p, i) => {
-      const start = (7 - i) * 0.08
+      const start = (LAST - i) * 0.08
       const u = seg(t, start, start + 0.28)
       p.opacity = 1 - u
       p.x = 0
@@ -542,7 +549,7 @@ function mountLodger(
     }
     if (t < 1.35) {
       const u = seg(t, 1.05, 1.35)
-      c.x = lerp(HOME, 233, easeInOut(u))
+      c.x = lerp(HOME, 269, easeInOut(u))
       c.y = lerp(GROUND, 18, easeOut(u)) - Math.sin(Math.PI * u) * 7
       c.pinX = lerp(HOME, PIN_SLOT.x, easeInOut(u))
       c.pinY = lerp(GROUND - 12.5, PIN_SLOT.y, easeInOut(u))
@@ -551,7 +558,7 @@ function mountLodger(
       return
     }
     const u = seg(t, 1.35, 1.72)
-    c.x = lerp(233, HOME, easeInOut(u))
+    c.x = lerp(269, HOME, easeInOut(u))
     c.y = lerp(18, GROUND, u) - Math.sin(Math.PI * u) * 10
     c.squint = t > 1.72 ? 0.35 : 1
   }
@@ -703,7 +710,7 @@ function mountLodger(
     {
       at: 0.95,
       run: () => {
-        if (sound()) PinSound.slot(75, 78, HOLE.x, W)
+        if (sound()) PinSound.slot(87, 90, HOLE.x, W)
       },
     },
     {
@@ -722,7 +729,7 @@ function mountLodger(
     if (t >= 1.2) return restHidden()
 
     poses.forEach((p, i) => {
-      const start = 0.32 + (i / 7) * 0.48
+      const start = 0.32 + (i / LAST) * 0.48
       const u = seg(t, start, start + 0.32)
       p.opacity = u
       p.x = 0

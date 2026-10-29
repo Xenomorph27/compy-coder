@@ -4,10 +4,10 @@ export default {
   "action.checking": "Po kontrollon…",
   "action.downloading": "Po shkarkohet…",
   "action.installRestart": "Instaloni dhe rinisni",
-  "action.download": "Shkarko OpenCode",
+  "action.download": "Shkarko Compy Code",
   "action.installing": "Po instalohet…",
   "toast.latest.title": "Ju jeni të përditësuar",
-  "toast.latest.description": "Ju jeni duke ekzekutuar versionin më të fundit të OpenCode.",
+  "toast.latest.description": "Ju jeni duke ekzekutuar versionin më të fundit të Compy Code.",
   "migration.title": "Kalo nga Beta në versionin e qëndrueshëm",
   "migration.description":
     "Për momentin, OpenCode Beta po kalon te OpenCode Stable. Shkarko versionin {{version}}, pastaj instalo OpenCode nga imazhi i diskut për të vazhduar marrjen e përditësimeve.",

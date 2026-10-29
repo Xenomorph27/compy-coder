@@ -4,10 +4,10 @@ export default {
   "action.checking": "Kontrollimine…",
   "action.downloading": "Allalaadimine…",
   "action.installRestart": "Installige ja taaskäivitage",
-  "action.download": "Laadi OpenCode alla",
+  "action.download": "Laadi Compy Code alla",
   "action.installing": "Installimine…",
   "toast.latest.title": "Oled kursis",
-  "toast.latest.description": "Kasutate rakenduse OpenCode uusimat versiooni.",
+  "toast.latest.description": "Kasutate rakenduse Compy Code uusimat versiooni.",
   "migration.title": "Liigu beetaversioonilt stabiilsele versioonile",
   "migration.description":
     "Praegu liigub OpenCode Beta versioonile OpenCode Stable. Laadi alla versioon {{version}} ja installi OpenCode kettatõmmiselt, et jätkata uuenduste saamist.",

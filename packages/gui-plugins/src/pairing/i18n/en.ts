@@ -17,7 +17,7 @@ export default {
   "setup.error": "Could not set up remote access.",
   retry: "Try again",
   "screenActive.title": "Keep screen active",
-  "screenActive.description": "Prevent this computer’s display from sleeping while OpenCode is running.",
+  "screenActive.description": "Prevent this computer’s display from sleeping while Compy Code is running.",
   "screenActive.error": "Could not update the screen activity setting. Try again.",
   qr: "Pairing QR code",
   copyLink: "Copy link",

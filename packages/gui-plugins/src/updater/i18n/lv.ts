@@ -4,10 +4,10 @@ export default {
   "action.checking": "Pārbauda…",
   "action.downloading": "Lejupielādē…",
   "action.installRestart": "Instalēt un restartēt",
-  "action.download": "Lejupielādēt OpenCode",
+  "action.download": "Lejupielādēt Compy Code",
   "action.installing": "Instalē…",
   "toast.latest.title": "Jums ir jaunākā versija",
-  "toast.latest.description": "Jūs izmantojat jaunāko OpenCode versiju.",
+  "toast.latest.description": "Jūs izmantojat jaunāko Compy Code versiju.",
   "migration.title": "Pāriet no Beta uz stabilo versiju",
   "migration.description":
     "Pagaidām OpenCode Beta tiek pārcelta uz OpenCode Stable. Lejupielādējiet versiju {{version}} un pēc tam instalējiet OpenCode no diska attēla, lai turpinātu saņemt atjauninājumus.",

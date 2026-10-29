@@ -4,10 +4,10 @@ export default {
   "action.checking": "Kontrol ediliyor…",
   "action.downloading": "İndiriliyor…",
   "action.installRestart": "Yükle ve yeniden başlat",
-  "action.download": "OpenCode’u indir",
+  "action.download": "Compy Code’u indir",
   "action.installing": "Kuruluyor…",
   "toast.latest.title": "Güncelsiniz",
-  "toast.latest.description": "OpenCode'un en son sürümünü kullanıyorsunuz.",
+  "toast.latest.description": "Compy Code'un en son sürümünü kullanıyorsunuz.",
   "migration.title": "Beta’dan Kararlı’ya geç",
   "migration.description":
     "OpenCode Beta şimdilik OpenCode Stable’a taşınıyor. Güncellemeleri almaya devam etmek için {{version}} sürümünü indirin, ardından OpenCode’u disk görüntüsünden yükleyin.",

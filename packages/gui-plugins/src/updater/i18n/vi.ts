@@ -4,10 +4,10 @@ export default {
   "action.checking": "Đang kiểm tra…",
   "action.downloading": "Đang tải xuống…",
   "action.installRestart": "Cài đặt và khởi động lại",
-  "action.download": "Tải OpenCode xuống",
+  "action.download": "Tải Compy Code xuống",
   "action.installing": "Đang cài đặt…",
   "toast.latest.title": "Đã cập nhật",
-  "toast.latest.description": "Bạn đang chạy phiên bản mới nhất của OpenCode.",
+  "toast.latest.description": "Bạn đang chạy phiên bản mới nhất của Compy Code.",
   "migration.title": "Chuyển từ Beta sang bản ổn định",
   "migration.description":
     "Hiện tại, OpenCode Beta đang chuyển sang OpenCode ổn định. Hãy tải phiên bản {{version}} xuống, sau đó cài đặt OpenCode từ ảnh đĩa để tiếp tục nhận bản cập nhật.",

@@ -4,10 +4,10 @@ export default {
   "action.checking": "Έλεγχος…",
   "action.downloading": "Λήψη…",
   "action.installRestart": "Εγκατάσταση και επανεκκίνηση",
-  "action.download": "Λήψη του OpenCode",
+  "action.download": "Λήψη του Compy Code",
   "action.installing": "Εγκατάσταση…",
   "toast.latest.title": "Είστε ενημερωμένοι",
-  "toast.latest.description": "Εκτελείτε την πιο πρόσφατη έκδοση του OpenCode.",
+  "toast.latest.description": "Εκτελείτε την πιο πρόσφατη έκδοση του Compy Code.",
   "migration.title": "Μετάβαση από Beta σε Σταθερή",
   "migration.description":
     "Προς το παρόν, το OpenCode Beta μεταφέρεται στο OpenCode Stable. Κάντε λήψη της έκδοσης {{version}} και, στη συνέχεια, εγκαταστήστε το OpenCode από το είδωλο δίσκου για να συνεχίσετε να λαμβάνετε ενημερώσεις.",

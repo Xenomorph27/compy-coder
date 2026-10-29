@@ -4,10 +4,10 @@ export default {
   "action.checking": "စစ်ဆေးနေသည်…",
   "action.downloading": "ဒေါင်းလုဒ်လုပ်နေသည်…",
   "action.installRestart": "ထည့်သွင်းပြီး ပြန်လည်စတင်ပါ။",
-  "action.download": "OpenCode ကို ဒေါင်းလုဒ်လုပ်ပါ",
+  "action.download": "Compy Code ကို ဒေါင်းလုဒ်လုပ်ပါ",
   "action.installing": "ထည့်သွင်းနေသည်…",
   "toast.latest.title": "သင်သည် ခေတ်မီနေပါသည်။",
-  "toast.latest.description": "သင်သည် OpenCode ၏ နောက်ဆုံးဗားရှင်းကို အသုံးပြုနေပါသည်။",
+  "toast.latest.description": "သင်သည် Compy Code ၏ နောက်ဆုံးဗားရှင်းကို အသုံးပြုနေပါသည်။",
   "migration.title": "Beta မှ Stable သို့ ပြောင်းရွှေ့ပါ",
   "migration.description":
     "ယခုအခါ OpenCode Beta သည် OpenCode Stable သို့ ပြောင်းရွှေ့နေပါသည်။ အပ်ဒိတ်များ ဆက်လက်ရယူရန် ဗားရှင်း {{version}} ကို ဒေါင်းလုဒ်လုပ်ပြီး ဒစ်ခ်အိမေ့ချ်မှ OpenCode ကို ထည့်သွင်းပါ။",
