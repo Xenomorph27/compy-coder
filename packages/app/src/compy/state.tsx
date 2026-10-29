@@ -11,7 +11,7 @@ export type CompySide = "left" | "right"
 export const COMPY_SIDES = ["left", "right"] as const satisfies readonly CompySide[]
 
 /** The debate steps sent to both agents, in order. An arena's `step` counts how many have been sent. */
-export const COMPY_STEPS = ["propose", "critique", "converge"] as const
+export const COMPY_STEPS = ["propose", "discuss", "critique", "revamp", "converge"] as const
 
 export type CompyStep = (typeof COMPY_STEPS)[number]
 
