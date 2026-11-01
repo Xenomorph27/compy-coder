@@ -306,7 +306,7 @@
   background: var(--v2-text-text-muted);
 }
 
-/* Context meter: one segmented bar and a horizontal legend, after the Claude Code context panel. */
+/* Context meter: one segmented bar and a horizontal legend. */
 [data-slot="compy-context"] {
   padding: 12px;
   border-radius: 10px;
@@ -314,7 +314,7 @@
   box-shadow: inset 0 1px 0 0 var(--compy-hairline, rgb(255 255 255 / 0.06));
 }
 
-/* One row of square cells, filled in window order, like Claude Code's context grid laid on its side. */
+/* One row of square cells, filled in window order, like a context grid laid on its side. */
 [data-slot="compy-context-cells"] {
   display: grid;
   grid-template-columns: repeat(40, minmax(0, 1fr));

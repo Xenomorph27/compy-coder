@@ -9,11 +9,11 @@ const LABELS = {
   free: "compy.context.free",
 } as const satisfies Record<ContextSegmentKey, string>
 
-// One cell per 2.5% of the window, laid out in a single row like a horizontal Claude Code context grid.
+// One cell per 2.5% of the window, laid out in a single row like a horizontal context grid.
 const CELLS = 40
 
 /**
- * How full an agent's context window is, after the Claude Code context panel but horizontal: a row of cells coloured by
+ * How full an agent's context window is, laid out horizontally: a row of cells coloured by
  * what fills them, a legend with each part's tokens and share, and the session's running totals. Before the first
  * reply it already shows the whole window as free space, so the breakdown is never missing.
  */
